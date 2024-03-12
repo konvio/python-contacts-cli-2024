@@ -3,7 +3,7 @@ from collections import UserDict, defaultdict
 from datetime import date, datetime
 from typing import Optional
 
-from models.record import DATE_FORMAT, Record
+from .record import DATE_FORMAT, Record
 
 ADDRESS_BOOK_FILENAME = "address_book.json"
 WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Next Monday"]
@@ -55,9 +55,9 @@ class AddressBook(UserDict):
 
         for colleague in self.data.values():
             name = colleague.name
-            birthday = colleague.birthday.get_birthday_datetime()
-            if not birthday:
+            if not colleague.birthday:
                 continue
+            birthday = colleague.birthday.get_birthday_datetime()
             birthday_this_year = self._get_birthday_this_year(birthday, relative_date)
 
             delta_days = (birthday_this_year - relative_date).days

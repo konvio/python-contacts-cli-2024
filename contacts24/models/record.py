@@ -2,7 +2,7 @@ import re
 from datetime import date, datetime
 from typing import List, Optional
 
-from errors import InaccurateBirthdayFormat, InaccuratePhoneFormat
+from contacts24.errors import InaccurateBirthdayFormat, InaccuratePhoneFormat
 
 DATE_FORMAT = "%d.%m.%Y"
 
