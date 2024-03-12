@@ -1,3 +1,3 @@
 DATE_FORMAT = "%Y-%m-%d"
-CONTACTS_FILE = "contacts.json"
+ADDRESSBOOK_FILE = "addressbook.json"
 NOTES_FILE = "notes.json"
