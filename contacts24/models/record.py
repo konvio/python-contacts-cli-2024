@@ -3,8 +3,7 @@ from datetime import date, datetime
 from typing import List, Optional
 
 from contacts24.errors import InaccurateBirthdayFormat, InaccuratePhoneFormat
-
-DATE_FORMAT = "%d.%m.%Y"
+from contacts24.config import DATE_FORMAT
 
 
 class Field:
