@@ -1,7 +1,8 @@
 import datetime
 import json
 
-from contacts24.model import AddressBook, Note
+from contacts24.models.address_book import AddressBook
+from contacts24.models.record import Record
 from contacts24.config import ADDRESSBOOK_FILE, NOTES_FILE
 from contacts24.errors import AppError
 
