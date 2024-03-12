@@ -1,9 +1,8 @@
-import datetime
 import json
 
 from contacts24.models.address_book import AddressBook
 from contacts24.models.record import Record
-from contacts24.config import ADDRESSBOOK_FILE, NOTES_FILE
+from contacts24.config import ADDRESSBOOK_FILE
 from contacts24.errors import AppError
 
 
@@ -32,8 +31,8 @@ def get_contacts(filename: str = ADDRESSBOOK_FILE) -> AddressBook:
     
     return address_book
 
-def save_contacts(address_book: AddressBook, filename: str = ADDRESSBOOK_FILE) -> None:
-    """Save contacts to json file (from config.ADDRESSBOOK_FILE)
+def save_address_book(address_book: AddressBook, filename: str = ADDRESSBOOK_FILE) -> None:
+    """Save address book to json file (from config.ADDRESSBOOK_FILE)
 
     Args:
         address_book (AddressBook): Address Book to save
@@ -44,7 +43,8 @@ def save_contacts(address_book: AddressBook, filename: str = ADDRESSBOOK_FILE) -
     """
     try:
         with open(filename, "w") as file:
-            json.dump(contacts, file)
+            records_list = [record_serialization(record) for record in address_book.data.values()]
+            json.dump(records_list, file)
     except Exception as e:
         raise AppError(e)
 
