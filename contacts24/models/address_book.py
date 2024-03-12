@@ -3,12 +3,10 @@ from collections import UserDict, defaultdict
 from datetime import date, datetime
 from typing import Optional
 
-from models.record import DATE_FORMAT, Record
-
-ADDRESS_BOOK_FILENAME = "address_book.json"
-WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Next Monday"]
-MONDAY_INDEX = 0
-NEXT_MONDAY_INDEX = -1
+from contacts24.models.record import Record
+from contacts24.config import (
+    ADDRESSBOOK_FILE, WEEKDAYS, MONDAY_INDEX, NEXT_MONDAY_INDEX, DATE_FORMAT
+)
 
 
 class AddressBook(UserDict):
@@ -25,13 +23,13 @@ class AddressBook(UserDict):
         else:
             print(f"No records found by the name {name}")
 
-    def save_to_file(self, filename: str = ADDRESS_BOOK_FILENAME) -> None:
+    def save_to_file(self, filename: str = ADDRESSBOOK_FILE) -> None:
         with open(filename, "w") as f:
             records_list = [record.to_dict() for record in self.data.values()]
             json.dump(records_list, f)
 
     @staticmethod
-    def load_from_file(filename: str = ADDRESS_BOOK_FILENAME) -> "AddressBook":
+    def load_from_file(filename: str = ADDRESSBOOK_FILE) -> "AddressBook":
         with open(filename, "r") as f:
             records_list = json.load(f)
         address_book = AddressBook()
@@ -55,9 +53,9 @@ class AddressBook(UserDict):
 
         for colleague in self.data.values():
             name = colleague.name
-            birthday = colleague.birthday.get_birthday_datetime()
-            if not birthday:
+            if not colleague.birthday:
                 continue
+            birthday = colleague.birthday.get_birthday_datetime()
             birthday_this_year = self._get_birthday_this_year(birthday, relative_date)
 
             delta_days = (birthday_this_year - relative_date).days
