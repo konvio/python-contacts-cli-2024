@@ -1,4 +1,4 @@
-from app.model import Contact
+from contacts24.model import Contact
 
 
 def print_upcoming_bdays(contacts: list[Contact], days: int = 7):

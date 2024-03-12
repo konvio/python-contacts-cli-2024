@@ -11,7 +11,7 @@ This is a command-line interface (CLI) application written in Python.
 
 ```bash
 pip install contacts24
-python -m app
+python -m contacts24
 
 ### From source code
 

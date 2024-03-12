@@ -1,5 +1,5 @@
 import datetime
-from app.model import Contact, Note
+from contacts24.model import Contact, Note
 
 
 def get_contacts() -> list[Contact]:
