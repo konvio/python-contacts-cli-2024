@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "app"
+name = "contacts24"
 version = "0.1.0"
 description = ""
 authors = ["Vitaliy Kononenko <konvio@users.noreply.github.com>"]
