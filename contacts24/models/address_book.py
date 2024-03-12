@@ -24,19 +24,19 @@ class AddressBook(UserDict):
             print(f"No records found by the name {name}")
 
     def save_to_file(self, filename: str = ADDRESSBOOK_FILE) -> None:
-        with open(filename, "w") as f:
-            records_list = [record.to_dict() for record in self.data.values()]
-            json.dump(records_list, f)
+        from contacts24.db import save_address_book
+        if filename:
+            save_address_book(self, filename)
+        else:
+            save_address_book(self)
 
     @staticmethod
     def load_from_file(filename: str = ADDRESSBOOK_FILE) -> "AddressBook":
-        with open(filename, "r") as f:
-            records_list = json.load(f)
-        address_book = AddressBook()
-        for record_dict in records_list:
-            record = Record.from_dict(record_dict)
-            address_book.add_record(record)
-        return address_book
+        from contacts24.db import get_contacts
+        if filename:
+            return get_contacts(filename)
+        else:
+            return get_contacts()
 
     def get_birthdays_per_week(self, relative_date: date = datetime.today().date()) -> str:
         """

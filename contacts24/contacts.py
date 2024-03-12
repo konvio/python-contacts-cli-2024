@@ -2,6 +2,7 @@
 
 from typing import Optional
 
+from contacts24.config import ADDRESSBOOK_FILE
 from .models.address_book import AddressBook
 from .models.record import Record
 from .errors import (
@@ -33,7 +34,7 @@ def parse_input(user_input: str) -> tuple[str, Optional[CommandArguments]]:
 
 def load_contacts_book() -> AddressBook:
     try:
-        contacts = AddressBook.load_from_file("address_book.json")
+        contacts = AddressBook.load_from_file(ADDRESSBOOK_FILE)
     except FileNotFoundError:
         print("File 'address_book.json' not found. Initializing an empty AddressBook.")
         contacts = AddressBook()
