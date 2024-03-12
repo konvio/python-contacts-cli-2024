@@ -1,0 +1,30 @@
+name: Poetry Build
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.8.0
+      - name: Install dependencies
+        run: poetry install
+      - name: Lint with Ruff
+        run: poetry run ruff check .
+      - name: Build
+        run: poetry build
+      - name: Test
+        run: poetry build
