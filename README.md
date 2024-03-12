@@ -9,7 +9,11 @@ This is a command-line interface (CLI) application written in Python.
 
 ## Installation
 
-First, clone the repository:
+```bash
+pip install contacts24
+python -m app
+
+### From source code
 
 ```bash
 git clone https://github.com/konvio/python-contacts-cli-2024
