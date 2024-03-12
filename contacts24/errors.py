@@ -10,9 +10,12 @@ HELP_ERROR_MESSAGE = """Supported functions:
 """
 
 
+class AppError(Exception):
+    pass
+
+
 class InputError(Exception):
     """Base class for other input exceptions"""
-
     pass
 
 
