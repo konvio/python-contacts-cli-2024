@@ -1,0 +1,2 @@
+def AppError(Exception):
+    pass
