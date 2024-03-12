@@ -5,7 +5,7 @@ from typing import Optional
 
 from contacts24.models.record import Record
 from contacts24.config import (
-    CONTACTS_FILE, WEEKDAYS, MONDAY_INDEX, NEXT_MONDAY_INDEX, DATE_FORMAT
+    ADDRESSBOOK_FILE, WEEKDAYS, MONDAY_INDEX, NEXT_MONDAY_INDEX, DATE_FORMAT
 )
 
 
@@ -23,13 +23,13 @@ class AddressBook(UserDict):
         else:
             print(f"No records found by the name {name}")
 
-    def save_to_file(self, filename: str = CONTACTS_FILE) -> None:
+    def save_to_file(self, filename: str = ADDRESSBOOK_FILE) -> None:
         with open(filename, "w") as f:
             records_list = [record.to_dict() for record in self.data.values()]
             json.dump(records_list, f)
 
     @staticmethod
-    def load_from_file(filename: str = CONTACTS_FILE) -> "AddressBook":
+    def load_from_file(filename: str = ADDRESSBOOK_FILE) -> "AddressBook":
         with open(filename, "r") as f:
             records_list = json.load(f)
         address_book = AddressBook()
