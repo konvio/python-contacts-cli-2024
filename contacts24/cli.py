@@ -2,8 +2,12 @@
 
 from functools import partial
 
-from colorama import Fore, Style, init
+from colorama import Fore, init
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import FuzzyWordCompleter, WordCompleter
+from prompt_toolkit.styles import Style
 
+from .config import PROMPT_MESSAGE, PROMPT_STYLE
 from .contacts import (
     add_birthday,
     add_contact,
@@ -42,19 +46,22 @@ commands = {
 
 
 def start():
-    print(Fore.GREEN + "Welcome to the assistant bot! Type 'help' to see available commands.")
+    print(Fore.LIGHTGREEN_EX + "Welcome to the Contants24!\n" + Fore.WHITE + "Type 'help' to see available commands.\n")
+    command_completer = FuzzyWordCompleter(list(commands.keys()))
+    command_completer = WordCompleter(list(commands.keys()))
     while True:
         try:
-            user_input = input(Fore.GREEN + "Enter a command: ")
+            style = Style.from_dict(PROMPT_STYLE)
+            user_input = prompt(PROMPT_MESSAGE, style=style, completer=command_completer)
             command, args = parse_input(user_input)
 
             if command == "exit":
-                print(Fore.GREEN + "Good bye!")
+                print(Fore.LIGHTGREEN_EX + "Good bye!")
                 contacts.save_to_file()
                 break
 
             if command in commands:
-                print(Style.RESET_ALL + str(commands[command](args)))
+                print(Fore.WHITE + str(commands[command](args)))
             else:
                 print(Fore.RED + f"Unknown command '{command}', please try again.\n{HELP_ERROR_MESSAGE}")
         except Exception as e:
