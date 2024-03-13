@@ -1,6 +1,5 @@
 from collections import UserDict
 
-from contacts24.models.record import Field
 from contacts24.models.note import Note
 
 # Temporary contract
