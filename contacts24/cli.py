@@ -4,7 +4,7 @@ from functools import partial
 
 from colorama import Fore, init
 from prompt_toolkit import prompt
-from prompt_toolkit.completion import FuzzyWordCompleter, WordCompleter
+from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.styles import Style
 
 from .config import PROMPT_MESSAGE, PROMPT_STYLE
@@ -47,7 +47,6 @@ commands = {
 
 def start():
     print(Fore.LIGHTGREEN_EX + "Welcome to the Contants24!\n" + Fore.WHITE + "Type 'help' to see available commands.\n")
-    command_completer = FuzzyWordCompleter(list(commands.keys()))
     command_completer = WordCompleter(list(commands.keys()))
     while True:
         try:
