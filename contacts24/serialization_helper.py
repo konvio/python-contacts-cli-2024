@@ -53,8 +53,8 @@ def note_serialization(note: Note) -> dict:
         dict: dictionary based on input record
     """
     return {
-        "id": record.name.value,
-        "text": record.text.value,
+        "id": note.name.value,
+        "text": note.text.value,
     }
 
 def note_deserialization(data: dict) -> Note:
