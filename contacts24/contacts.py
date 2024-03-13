@@ -31,15 +31,6 @@ def parse_input(user_input: str) -> tuple[str, Optional[CommandArguments]]:
 
     return cmd, *args
 
-
-# def load_contacts_book() -> AddressBook:
-#     try:
-#         contacts = AddressBook.load_from_file(ADDRESSBOOK_FILE)
-#     except FileNotFoundError:
-#         print("File 'address_book.json' not found. Initializing an empty AddressBook.")
-#         contacts = AddressBook()
-#     return contacts
-
 def load_contacts_book() -> AddressBook:
     try:
         contacts = AddressBook.load_from_file(ADDRESSBOOK_FILE)
