@@ -1,12 +1,10 @@
 import json
 
 from contacts24.models.address_book import AddressBook
-from contacts24.models.record import Record
 from contacts24.models.notes import Notes
-from contacts24.models.note import Note
 from contacts24.config import ADDRESSBOOK_FILE, NOTES_FILE
 from contacts24.errors import AppError
-from contacts24.serialization_helper import record_deserialization, record_serialization
+from contacts24.serialization_helper import record_deserialization, record_serialization, note_deserialization, note_serialization
 
 
 #region AddressBook

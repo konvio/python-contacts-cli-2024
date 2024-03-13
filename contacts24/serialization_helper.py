@@ -1,5 +1,3 @@
-import json
-
 from contacts24.models.record import Record
 from contacts24.models.note import Note
 
