@@ -93,6 +93,6 @@ def start():
                 print(Fore.WHITE + str(commands[command]()(args)))
             else:
                 help_text = get_help()
-                print(Fore.RED + f"Unknown command '{command}', please try again.\n{help}")
+                print(Fore.RED + f"Unknown command '{command}', please try again.\n{help_text}")
         except Exception as e:
             print(Fore.RED + f"Unexpected error occured {e}")
