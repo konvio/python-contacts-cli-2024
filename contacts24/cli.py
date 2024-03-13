@@ -43,19 +43,19 @@ commands = {
 
 def start():
     print(Fore.GREEN + "Welcome to the assistant bot! Type 'help' to see available commands.")
-    try:
-        while True:
+    while True:
+        try:
             user_input = input(Fore.GREEN + "Enter a command: ")
             command, args = parse_input(user_input)
 
             if command == "exit":
                 print(Fore.GREEN + "Good bye!")
+                contacts.save_to_file()
                 break
 
             if command in commands:
                 print(Style.RESET_ALL + str(commands[command](args)))
             else:
                 print(Fore.RED + f"Unknown command '{command}', please try again.\n{HELP_ERROR_MESSAGE}")
-    except Exception as e:
-        print(Fore.RED + f"Unexpected error occured {e}")
-        contacts.save_to_file()
+        except Exception as e:
+            print(Fore.RED + f"Unexpected error occured {e}")
