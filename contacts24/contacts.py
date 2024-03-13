@@ -14,6 +14,8 @@ from .errors import (
     input_error,
 )
 
+from .config import ADDRESSBOOK_FILE
+
 Contacts = dict[str, str]
 CommandArguments = list[str]
 
@@ -28,12 +30,12 @@ def parse_input(user_input: str) -> tuple[str, Optional[CommandArguments]]:
     if len(args) == 0:
         return cmd, None
 
-    return cmd, *args
+    return cmd, args
 
 
 def load_contacts_book() -> AddressBook:
     try:
-        contacts = AddressBook.load_from_file("address_book.json")
+        contacts = AddressBook.load_from_file(ADDRESSBOOK_FILE)
     except FileNotFoundError:
         print("File 'address_book.json' not found. Initializing an empty AddressBook.")
         contacts = AddressBook()
@@ -82,7 +84,7 @@ def change_contact(args: CommandArguments, contacts: AddressBook) -> str:
 
 @input_error
 def get_contact_phone(args: CommandArguments, contacts: AddressBook) -> str:
-    if args[0] is None:
+    if args is None:
         raise PhoneInputError()
 
     name = args[0]
@@ -95,7 +97,7 @@ def get_contact_phone(args: CommandArguments, contacts: AddressBook) -> str:
 
 @input_error
 def get_contact_birthday(args: CommandArguments, contacts: AddressBook) -> str:
-    if args[0] is None:
+    if args is None:
         raise GetBirthdayInputError()
 
     name = args[0]
@@ -107,11 +109,11 @@ def get_contact_birthday(args: CommandArguments, contacts: AddressBook) -> str:
 
 
 @input_error
-def get_upcoming_birthdays(contacts: AddressBook) -> str:
+def get_upcoming_birthdays(args: CommandArguments, contacts: AddressBook) -> str:
     return contacts.get_birthdays_per_week()
 
 
-def get_all_contacts(contacts: AddressBook) -> str:
+def get_all_contacts(args: CommandArguments, contacts: AddressBook) -> str:
     if not contacts:
         return "No contacts stored."
     else:
