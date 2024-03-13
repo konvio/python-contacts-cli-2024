@@ -1,6 +1,6 @@
 HELP_ERROR_MESSAGE = """Supported functions:
-- 'add': Add new contact, the correct format is 'add username phone'
-- 'change': Change existing contact, the correct format is 'change username phone'
+- 'add': Add new contact, the correct format is 'add username phone email address'
+- 'change': Change existing contact, the correct format is 'change username phone email address'
 - 'phone': Print existing contact number, the correct format is 'phone username'
 - 'add-birthday': command expects two arguments 'name' and 'birthday'
 - 'show-birthday': Print existing contact birthday, the correct format is 'show-birthday username'
@@ -21,7 +21,7 @@ class InputError(Exception):
 
 class AddContactInputError(InputError):
     def __str__(self):
-        return "AddContactInputError: 'add' command expects two arguments 'name' and 'phone'."
+        return "AddContactInputError: 'add' command expects 4 arguments 'name', 'phone', 'email' and 'address'."
 
 
 class AddBirthdatInputError(InputError):
@@ -31,7 +31,7 @@ class AddBirthdatInputError(InputError):
 
 class ChangeInputError(InputError):
     def __str__(self):
-        return "ChangeInputError: 'change' command expects two arguments 'name' and 'phone'."
+        return "ChangeInputError: 'change' command expects 4 arguments 'name', 'phone', 'email' and 'address'."
 
 
 class PhoneInputError(InputError):
@@ -52,6 +52,10 @@ class InaccurateBirthdayFormat(InputError):
 class InaccuratePhoneFormat(InputError):
     def __str__(self):
         return "InaccuratePhoneFormat: Phone number must contain exactly 10 digits."
+
+class InaccurateEmailFormat(InputError):
+    def __str__(self):
+        return "InaccurateEmailFormat: The email address provided does not adhere to the standard email format."
 
 
 class NonExistingContact(InputError):

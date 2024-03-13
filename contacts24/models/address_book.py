@@ -1,8 +1,8 @@
-import json
 from collections import UserDict, defaultdict
 from datetime import date, datetime
 from typing import Optional
 
+from contacts24.db import save_address_book
 from contacts24.models.record import Record
 from contacts24.config import (
     ADDRESSBOOK_FILE, WEEKDAYS, MONDAY_INDEX, NEXT_MONDAY_INDEX, DATE_FORMAT
@@ -24,7 +24,6 @@ class AddressBook(UserDict):
             print(f"No records found by the name {name}")
 
     def save_to_file(self, filename: str = ADDRESSBOOK_FILE) -> None:
-        from contacts24.db import save_address_book
         if filename:
             save_address_book(self, filename)
         else:

@@ -43,12 +43,14 @@ def load_contacts_book() -> AddressBook:
 
 @input_error
 def add_contact(args: CommandArguments, contacts: AddressBook) -> str:
-    if args is None or len(args) < 2:
+    if args is None or len(args) < 4:
         raise AddContactInputError()
 
-    name, phone = args[:2]
+    name, phone, email, address = args[:4]
     new_contact = Record(name)
     new_contact.add_phone(phone)
+    new_contact.add_email(email)
+    new_contact.add_address(address)
     contacts.add_record(new_contact)
     return f"Contact {name} added."
 
@@ -69,16 +71,18 @@ def add_birthday(args: CommandArguments, contacts: AddressBook) -> str:
 
 @input_error
 def change_contact(args: CommandArguments, contacts: AddressBook) -> str:
-    if args is None or len(args) < 2:
+    if args is None or len(args) < 4:
         raise ChangeInputError()
 
-    name, phone = args[:2]
+    name, phone, email, address = args[:4]
     contact = contacts.find(name)
     if not contact:
         raise NonExistingContact()
 
     contact.edit_phone(contact.phones[0].value, phone)
-    return f"Phone number for {name} updated."
+    contact.edit_email(contact.emails[0].value, email)
+    contact.add_address(address)
+    return f"Phone number, email and address for {name} updated."
 
 
 @input_error

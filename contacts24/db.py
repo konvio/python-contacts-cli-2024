@@ -64,7 +64,9 @@ def record_serialization(record: Record) -> dict:
     return {
         "name": record.name.value,
         "phones": [phone.value for phone in record.phones],
+        "emails": [email.value for email in record.emails],
         "birthday": record.birthday.value if record.birthday else None,
+        "address": record.address.value if record.address else None,
     }
 
 def record_deserialization(data: dict) -> Record:
@@ -80,10 +82,16 @@ def record_deserialization(data: dict) -> Record:
     
     for phone in data["phones"]:
         record.add_phone(phone)
-    
+
+    for email in data["emails"]:
+        record.add_email(email)
+
     if data["birthday"]:
         record.add_birthday(data["birthday"])
-    
+
+    if data["address"]:
+        record.add_address(data["address"])
+
     return record
 
 #endregion
