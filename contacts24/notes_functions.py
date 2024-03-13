@@ -1,9 +1,12 @@
 
+
 from contacts24.errors import input_error
+
+
 
 @input_error
 def add_note(args, note_book):
-    """Додає нотатку до записника."""
+    """Adds a note to the notebook."""
     client_id, title, text = args
     note_book.add_note(client_id, title, text)
     return "Note added."
@@ -11,7 +14,7 @@ def add_note(args, note_book):
 
 @input_error
 def change_note(args, note_book):
-    """Змінює текст існуючої нотатки."""
+    """Changes the text of an existing note."""
     key, new_text = args
     note_book.change_note(int(key), new_text)
     return "Note changed."
@@ -19,14 +22,14 @@ def change_note(args, note_book):
 
 @input_error
 def get_notes(note_book):
-    """Показує всі нотатки з записника."""
+    """Shows all notes from the notebook."""
     notes = note_book.get_notes()
     return "\n".join([str(note) for note in notes])
 
 
 @input_error
 def delete_note(args, note_book):
-    """Видаляє нотатку з записника."""
+    """Deletes a note from the notebook."""
     key, = args
     note_book.delete_note(int(key))
     return "Note deleted."
@@ -34,11 +37,10 @@ def delete_note(args, note_book):
 
 @input_error
 def search_text(args, note_book):
-    """Пошук нотаток за текстовим запитом."""
+    """Searches for notes by a text query."""
     search_query, = args
     found_notes = note_book.search_text(search_query)
     if found_notes:
         return "\n".join([f"Note ID: {note_id}, Note Data: {note_data}" for note_id, note_data in found_notes])
     else:
         return "No notes found."
-

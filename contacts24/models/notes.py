@@ -1,41 +1,41 @@
-def get_notes():
-    pass
+
+
 
 from collections import UserDict
 from contacts24.errors import NonExistingNote
 
 
-class Note(UserDict):
-    """Цей клас має функціонал для роботи з нотатками"""
-    def add_note(self, client_id, title, text):
-        """Додає нову нотатку до записника."""
-        note_id = len(self.data) + 1  # Генерує унікальний ідентифікатор для нотатки
-        self.data[note_id] = {'client_id': client_id, 'title': title, 'text': text}
+
+class Notes(UserDict):
+    """This class provides functionality for working with notes"""
+    def add_note(self, title, text):
+        """Adds a new note to the notebook."""
+        max_index = max(self.data.keys()) if self.data else 0
+        note_id = max_index + 1  # Generates a unique identifier for the note
+        self.data[note_id] = {'note_id': note_id, 'title': title, 'text': text}
 
     def change_note(self, key, new_text):
-        """Змінює текст існуючої нотатки за її ключем."""
+        """Changes the text of an existing note by its key."""
         if key in self.data:
             self.data[key]['text'] = new_text
         else:
             raise NonExistingNote()
 
     def get_notes(self):
-        """Повертає всі нотатки з записника."""
+        """Returns all notes from the notebook."""
         return self.data.values()
 
     def delete_note(self, key):
-        """Видаляє нотатку за її ключем."""
+        """Deletes a note by its key."""
         if key in self.data:
             del self.data[key]
         else:
-            raise KeyError(f"Note with key {key} not found.")
+            raise NonExistingNote()
 
     def search_text(self, search_query):
-        """Пошук нотаток за текстовим запитом."""
+        """Searches for notes by a text query."""
         found_notes = []
         for note_id, note_data in self.data.items():
             if search_query in note_data['text']:
                 found_notes.append((note_id, note_data))
         return found_notes
-
-
