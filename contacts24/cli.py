@@ -1,5 +1,9 @@
 """Prototype of CLI assistant"""
 
+from functools import partial
+
+from colorama import Fore, Style, init
+
 from .contacts import (
     add_birthday,
     add_contact,
@@ -9,11 +13,11 @@ from .contacts import (
     get_contact_phone,
     get_upcoming_birthdays,
     load_contacts_book,
-    parse_input
+    parse_input,
 )
 from .errors import HELP_ERROR_MESSAGE
 
-from functools import partial
+init(autoreset=True)
 
 
 contacts = load_contacts_book()
@@ -38,20 +42,20 @@ commands = {
 
 
 def start():
-    print("Welcome to the assistant bot! Type 'help' to see available commands.")
+    print(Fore.GREEN + "Welcome to the assistant bot! Type 'help' to see available commands.")
     try:
         while True:
-            user_input = input("Enter a command: ")
+            user_input = input(Fore.GREEN + "Enter a command: ")
             command, args = parse_input(user_input)
 
             if command == "exit":
-                print("Good bye!")
+                print(Fore.GREEN + "Good bye!")
                 break
 
             if command in commands:
-                print(commands[command](args))
+                print(Style.RESET_ALL + str(commands[command](args)))
             else:
-                print(f"Unknown command '{command}', please try again.\n{HELP_ERROR_MESSAGE}")
+                print(Fore.RED + f"Unknown command '{command}', please try again.\n{HELP_ERROR_MESSAGE}")
     except Exception as e:
-        print(f"Unexpected error occured {e}")
+        print(Fore.RED + f"Unexpected error occured {e}")
         contacts.save_to_file()
