@@ -62,7 +62,6 @@ def get_notes(filename: str = NOTES_FILE) -> Notes:
     Returns:
         Notes: List of notes
     """
-    
     notes = Notes()
     
     try:

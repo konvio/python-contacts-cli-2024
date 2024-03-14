@@ -1,4 +1,3 @@
-import json
 from collections import UserDict, defaultdict
 from datetime import date, datetime
 from typing import Optional
@@ -24,19 +23,47 @@ class AddressBook(UserDict):
             print(f"No records found by the name {name}")
 
     def save_to_file(self, filename: str = ADDRESSBOOK_FILE) -> None:
-        with open(filename, "w") as f:
-            records_list = [record.to_dict() for record in self.data.values()]
-            json.dump(records_list, f)
+        from contacts24.db import save_address_book
+        if filename:
+            save_address_book(self, filename)
+        else:
+            save_address_book(self)
 
     @staticmethod
     def load_from_file(filename: str = ADDRESSBOOK_FILE) -> "AddressBook":
-        with open(filename, "r") as f:
-            records_list = json.load(f)
-        address_book = AddressBook()
-        for record_dict in records_list:
-            record = Record.from_dict(record_dict)
-            address_book.add_record(record)
-        return address_book
+        from contacts24.db import get_contacts
+        if filename:
+            return get_contacts(filename)
+        else:
+            return get_contacts()
+
+    def __str__(self) -> str:
+        # Initialize the header and its length
+        columns = ['Name', 'Birthday', 'Address', 'Phones', 'Emails']
+        col_width = [len(h)+ 3 for h in columns]
+
+        # Gather all data
+        data = []
+        for name, record in self.data.items():
+            phones = ', '.join(str(p.value) for p in record.phones) if record.phones else 'N/A'
+            emails = ', '.join(str(e.value) for e in record.emails) if record.emails else 'N/A'
+            birthday = str(record.birthday) if record.birthday else 'N/A'
+            address = str(record.address) if record.address else 'N/A'
+            row = [name, birthday, address, phones, emails]
+            
+            # Update maximum column width
+            col_width = [max(col_width[i], len(cell)) for i, cell in enumerate(row)]
+
+            data.append(row)
+
+        # Define format string for each row
+        format_string = ''.join(f'{{:<{w}}} ' for w in col_width)
+
+        # Build table string
+        output = format_string.format(*columns) + '\n'
+        output += '\n'.join(format_string.format(*row) for row in data)
+
+        return output
 
     def get_birthdays_per_week(self, relative_date: date = datetime.today().date()) -> str:
         """

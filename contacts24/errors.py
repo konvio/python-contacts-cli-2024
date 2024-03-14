@@ -1,18 +1,3 @@
-HELP_ERROR_MESSAGE = """\
-+--------------+----------------------------------+----------------------------------+
-| Command      | Description                      | Format                           |
-+--------------+----------------------------------+----------------------------------+
-| add          | Adds a new contact               | 'add <username> <phone>'         |
-| change-phone | Changes a contact's phone number | 'change-phone <username> <phone>'|
-| phone        | Prints a contact's number        | 'phone <username>'               |
-| add-birthday | Adds a contact's birthday        | 'add-birthday <username> <date>' |
-| show-birthday| Prints a contact's birthday      | 'show-birthday <username>'       |
-| birthdays    | Prints upcoming birthdays        | 'birthdays'                      |
-| all-contacts | Prints all contacts              | 'all-contacts'                   |
-| exit/close   | Closes the app                   | 'exit' or 'close'                |
-+--------------+----------------------------------+----------------------------------+
-"""
-
 
 class AppError(Exception):
     pass
@@ -25,7 +10,7 @@ class InputError(Exception):
 
 class AddContactInputError(InputError):
     def __str__(self):
-        return "AddContactInputError: 'add' command expects two arguments 'name' and 'phone'."
+        return "AddContactInputError: 'add-contact' command expects two arguments 'name' and 'phone'"
 
 
 class AddBirthdatInputError(InputError):
@@ -35,12 +20,24 @@ class AddBirthdatInputError(InputError):
 
 class ChangeInputError(InputError):
     def __str__(self):
-        return "ChangeInputError: 'change' command expects two arguments 'name' and 'phone'."
+        return "ChangeInputError: 'change-phone' command expects two arguments 'name' and 'phone'"
 
+class ChangeEmailInputError(InputError):
+    def __str__(self):
+        return "ChangeInputError: 'change-email' command expects two arguments 'name' and  'email'."
+
+class FindContactsInputError(InputError):
+    def __str__(self):
+        return "FindContactsInputError: 'find-contacts' command expects one arguments 'name'."
+
+
+class AddAddressInputError(InputError):
+    def __str__(self):
+        return "AddBirthdatInputError: 'add-address' command expects two arguments 'name' and 'address'."
 
 class PhoneInputError(InputError):
     def __str__(self):
-        return "PhoneInputError: 'phone' command expects one argument 'name'."
+        return "PhoneInputError: 'show-phone' command expects one argument 'name'."
 
 
 class GetBirthdayInputError(InputError):
@@ -56,6 +53,10 @@ class InaccurateBirthdayFormat(InputError):
 class InaccuratePhoneFormat(InputError):
     def __str__(self):
         return "InaccuratePhoneFormat: Phone number must contain exactly 10 digits."
+
+class InaccurateEmailFormat(InputError):
+    def __str__(self):
+        return "InaccurateEmailFormat: The email address provided does not adhere to the standard email format."
 
 
 class NonExistingContact(InputError):

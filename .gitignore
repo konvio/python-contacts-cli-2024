@@ -161,3 +161,6 @@ cython_debug/
 
 #exclude mac files
 .DS_Store
+
+# address book sample
+addressbook.json
