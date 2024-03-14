@@ -68,6 +68,12 @@ class NonExistingNote(InputError):
     def __str__(self):
         return "NonExistingNote: This note does not exist or has been deleted"
 
+
+class InnacutateBirthdaysCommand(InputError):
+    def __str__(self):
+        return "InnacutateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
+
+
 def input_error(func):
     def inner(*args, **kwargs):
         try:
