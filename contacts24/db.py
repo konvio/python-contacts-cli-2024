@@ -3,7 +3,7 @@ import json
 from contacts24.models.address_book import AddressBook
 from contacts24.models.notes import Notes
 from contacts24.config import ADDRESSBOOK_FILE, NOTES_FILE
-from contacts24.errors import AppError, app_error_wrapper
+from contacts24.errors import app_error_wrapper
 from contacts24.serialization_helper import record_deserialization, record_serialization, note_deserialization, note_serialization
 
 
@@ -12,9 +12,6 @@ from contacts24.serialization_helper import record_deserialization, record_seria
 @app_error_wrapper
 def get_contacts(filename: str = ADDRESSBOOK_FILE) -> AddressBook:
     """Get addressbook from json file (default config.ADDRESSBOOK_FILE)
-
-    Raises:
-        AppError: Any errors (incorrect json, etc.) wrapped in AppError
 
     Returns:
         AddressBook: AddressBook from json
@@ -38,8 +35,6 @@ def save_address_book(address_book: AddressBook, filename: str = ADDRESSBOOK_FIL
         address_book (AddressBook): Address Book to save
         filename (str): file name
 
-    Raises:
-        AppError: Any errors (missing file, incorrect json) wrapped in AppError
     """
     with open(filename, "w") as file:
         records_list = [record_serialization(record) for record in address_book.data.values()]
@@ -52,9 +47,6 @@ def save_address_book(address_book: AddressBook, filename: str = ADDRESSBOOK_FIL
 @app_error_wrapper
 def get_notes(filename: str = NOTES_FILE) -> Notes:
     """Get notes from fixed json file (from config.NOTES_FILE)
-
-    Raises:
-        AppError: All errors wrapped in AppError
 
     Returns:
         Notes: List of notes
@@ -75,9 +67,6 @@ def save_notes(notes: Notes, filename: str = NOTES_FILE) -> None:
 
     Args:
         notes (Notes): Notes to save
-
-    Raises:
-        AppError: Any errors (missing file, incorrect json) wrapped in AppError
     """
 
     with open(filename, "w") as file:
