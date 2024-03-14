@@ -91,3 +91,4 @@ def app_error_wrapper(func):
             raise AppError(e)
 
     return inner
+
