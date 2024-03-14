@@ -1,5 +1,6 @@
 from typing import Dict 
 
+
 class Command():
     """Command"""
     def __init__(self, name: str, func, description="", format = "", is_hidden = False):
