@@ -119,7 +119,7 @@ def get_contact_birthday(args: CommandArguments, contacts: AddressBook) -> str:
 def get_upcoming_birthdays(args: CommandArguments, contacts: AddressBook) -> str:
     try:
         n_days = int(args[0])
-    except:
+    except TypeError:
         raise InnacutateBirthdaysCommand()
 
     if n_days >= 0:

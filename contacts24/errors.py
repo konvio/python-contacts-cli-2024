@@ -54,6 +54,7 @@ class InaccuratePhoneFormat(InputError):
     def __str__(self):
         return "InaccuratePhoneFormat: Phone number must contain exactly 10 digits."
 
+
 class InaccurateEmailFormat(InputError):
     def __str__(self):
         return "InaccurateEmailFormat: The email address provided does not adhere to the standard email format."
