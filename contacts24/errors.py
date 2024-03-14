@@ -78,4 +78,11 @@ def input_error(func):
     return inner
 
 
+def app_error_wrapper(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            raise AppError(e)
 
+    return inner
