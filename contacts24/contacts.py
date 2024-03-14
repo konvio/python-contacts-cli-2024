@@ -10,6 +10,7 @@ from .errors import (
     AddContactInputError,
     ChangeInputError,
     ChangeEmailInputError,
+    FindContactsInputError,
     AddAddressInputError,
     GetBirthdayInputError,
     NonExistingContact,
@@ -118,6 +119,23 @@ def get_all_contacts(args: CommandArguments, contacts: AddressBook) -> str:
         return "No contacts stored."
     else:
         return "\n".join([str(contact) for contact in contacts.data.values()])
+
+
+def find_contacts(args: CommandArguments, contacts: AddressBook) -> str:
+    if args is None or len(args) < 1:
+        raise FindContactsInputError()
+
+    name = args[0]
+    result = ''
+
+    for contact in contacts.data.values():
+        if name in str(contact.name):
+            result += str(contact) + "\n"
+
+    if not result:
+        result = "No contacts found."
+
+    return result
 
 
 @input_error

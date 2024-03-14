@@ -26,6 +26,10 @@ class ChangeEmailInputError(InputError):
     def __str__(self):
         return "ChangeInputError: 'change-email' command expects two arguments 'name' and  'email'."
 
+class FindContactsInputError(InputError):
+    def __str__(self):
+        return "FindContactsInputError: 'find-contacts' command expects one arguments 'name'."
+
 
 class AddAddressInputError(InputError):
     def __str__(self):
