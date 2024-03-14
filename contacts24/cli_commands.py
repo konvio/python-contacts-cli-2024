@@ -42,14 +42,16 @@ def get_help(commands: Dict[str, Command]) -> str:
         padding_description = max([padding_description, len(command.description)])
         padding_format = max([padding_format, len(command.format)])
     
-    message += (("| {0:-^%s} " % padding_command) + ("| {0:-^%s} |" % padding_description) + (" {0:-^%s} |\n" % padding_format)).format("-")
+    border = (("| {0:-^%s} " % padding_command) + ("| {0:-^%s} |" % padding_description) + (" {0:-^%s} |\n" % padding_format)).format("-")
+    
+    message += border
     message += (("| {0:^%s} " % padding_command) + ("| {1:^%s} |" % padding_description) + (" {2:^%s} |\n" % padding_format)).format("Command", "Description", "Format")
-    message += (("| {0:-^%s} " % padding_command) + ("| {0:-^%s} |" % padding_description) + (" {0:-^%s} |\n" % padding_format)).format("-")
+    message += border
     
     for name, command in commands.items():
         if command.is_hidden:
             continue
         message += (("| {0:<%s} " % padding_command) + ("| {1:<%s} |" % padding_description) + (" {2:<%s} |\n" % padding_format)).format(command.name, command.description, command.format)
-    message += (("| {0:-^%s} " % padding_command) + ("| {0:-^%s} |" % padding_description) + (" {0:-^%s} |\n" % padding_format)).format("-")
+    message += border
     
     return message
