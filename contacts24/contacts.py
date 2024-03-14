@@ -5,6 +5,7 @@ from typing import Optional
 from contacts24.config import ADDRESSBOOK_FILE
 from .models.address_book import AddressBook
 from .models.record import Record
+from .birthdays import get_birthdays_within_days
 from .errors import (
     AddBirthdatInputError,
     AddContactInputError,
@@ -111,7 +112,12 @@ def get_contact_birthday(args: CommandArguments, contacts: AddressBook) -> str:
 
 @input_error
 def get_upcoming_birthdays(args: CommandArguments, contacts: AddressBook) -> str:
-    return contacts.get_birthdays_per_week()
+    if args is None:
+        raise GetBirthdayInputError()
+
+    n_days = int(args[0])
+
+    return get_birthdays_within_days(contacts, n_days)
 
 
 def get_all_contacts(args: CommandArguments, contacts: AddressBook) -> str:
