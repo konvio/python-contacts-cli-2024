@@ -122,5 +122,11 @@ class Record:
 
     def __str__(self) -> str:
         return (
-            f"Contact name: {self.name}, birthday: {self.birthday}, address: {self.address}, phones: {'; '.join(p.value for p in self.phones)}, emails: {'; '.join(p.value for p in self.emails)}"
+            f"Contact Information:\n"
+            f"---------------------\n"
+            f"Name: {self.name}\n"
+            f"Birthday: {self.birthday if self.birthday else 'N/A'}\n"
+            f"Address: {self.address if self.address else 'N/A'}\n"
+            f"Phones: {', '.join(p.value for p in self.phones) if self.phones else 'N/A'}\n"
+            f"Emails: {', '.join(p.value for p in self.emails) if self.emails else 'N/A'}\n"
         )
