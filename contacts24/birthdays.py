@@ -24,7 +24,6 @@ def get_birthdays_within_days(address_book: AddressBook, within_days: int) -> st
     return _construct_greeting_string(relative_date, birthday_map, within_days)
 
 
-
 def _construct_birthday_map(address_book: AddressBook, relative_date: date, within_days: int) -> DefaultDict[str, List[str]]:
     birthday_map = defaultdict()
 
