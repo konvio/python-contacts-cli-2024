@@ -7,8 +7,8 @@ from contacts24.errors import input_error
 @input_error
 def add_note(args, note_book):
     """Adds a note to the notebook."""
-    client_id, title, text = args
-    note_book.add_note(client_id, title, text)
+    note_id, title, text = args
+    note_book.add_note(note_id, title, text)
     return "Note added."
 
 
