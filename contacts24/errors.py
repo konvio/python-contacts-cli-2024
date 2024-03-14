@@ -64,6 +64,10 @@ class NonExistingContact(InputError):
         return "NonExistingContact: Check contact name, no such contact in address book"
 
 
+class NonExistingNote(InputError):
+    def __str__(self):
+        return "NonExistingNote: This note does not exist or has been deleted"
+
 def input_error(func):
     def inner(*args, **kwargs):
         try:
@@ -72,3 +76,6 @@ def input_error(func):
             return str(e)
 
     return inner
+
+
+
