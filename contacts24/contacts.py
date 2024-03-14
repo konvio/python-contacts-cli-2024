@@ -2,19 +2,21 @@
 
 from typing import Optional
 
+from contacts24.config import ADDRESSBOOK_FILE
 from .models.address_book import AddressBook
 from .models.record import Record
 from .errors import (
     AddBirthdatInputError,
     AddContactInputError,
     ChangeInputError,
+    ChangeEmailInputError,
+    FindContactsInputError,
+    AddAddressInputError,
     GetBirthdayInputError,
     NonExistingContact,
     PhoneInputError,
     input_error,
 )
-
-from .config import ADDRESSBOOK_FILE
 
 Contacts = dict[str, str]
 CommandArguments = list[str]
@@ -32,12 +34,11 @@ def parse_input(user_input: str) -> tuple[str, Optional[CommandArguments]]:
 
     return cmd, args
 
-
 def load_contacts_book() -> AddressBook:
     try:
         contacts = AddressBook.load_from_file(ADDRESSBOOK_FILE)
     except FileNotFoundError:
-        print("File 'address_book.json' not found. Initializing an empty AddressBook.")
+        print(f"File {ADDRESSBOOK_FILE} not found. Initializing an empty AddressBook.")
         contacts = AddressBook()
     return contacts
 
@@ -47,7 +48,7 @@ def add_contact(args: CommandArguments, contacts: AddressBook) -> str:
     if args is None or len(args) < 2:
         raise AddContactInputError()
 
-    name, phone = args[:2]
+    name, phone= args[:2]
     new_contact = Record(name)
     new_contact.add_phone(phone)
     contacts.add_record(new_contact)
@@ -79,7 +80,7 @@ def change_contact(args: CommandArguments, contacts: AddressBook) -> str:
         raise NonExistingContact()
 
     contact.edit_phone(contact.phones[0].value, phone)
-    return f"Phone number for {name} updated."
+    return f"Phone number, email and address for {name} updated."
 
 
 @input_error
@@ -118,3 +119,51 @@ def get_all_contacts(args: CommandArguments, contacts: AddressBook) -> str:
         return "No contacts stored."
     else:
         return "\n".join([str(contact) for contact in contacts.data.values()])
+
+
+def find_contacts(args: CommandArguments, contacts: AddressBook) -> str:
+    if args is None or len(args) < 1:
+        raise FindContactsInputError()
+
+    name = args[0]
+    result = ''
+
+    for contact in contacts.data.values():
+        if name in str(contact.name):
+            result += str(contact) + "\n"
+
+    if not result:
+        result = "No contacts found."
+
+    return result
+
+
+@input_error
+def change_email(args: CommandArguments, contacts: AddressBook) -> str:
+    if args is None or len(args) < 2:
+        raise ChangeEmailInputError()
+
+    name, email = args[:2]
+    contact = contacts.find(name)
+    if not contact:
+        raise NonExistingContact()
+
+    if  len(contact.emails):
+        contact.edit_email(contact.emails[0].value, email)
+    else:
+        contact.add_email(email)
+
+    return f"Email for {name} updated."
+
+@input_error
+def add_address(args: CommandArguments, contacts: AddressBook) -> str:
+    if args is None or len(args) < 2:
+        raise AddAddressInputError()
+
+    name, address = args[:2]
+    contact = contacts.find(name)
+    if not contact:
+        raise NonExistingContact()
+
+    contact.add_address(address)
+    return f"Address for {name} updated."

@@ -10,7 +10,7 @@ class InputError(Exception):
 
 class AddContactInputError(InputError):
     def __str__(self):
-        return "AddContactInputError: 'add' command expects two arguments 'name' and 'phone'."
+        return "AddContactInputError: 'add' command expects two arguments 'name' and 'phone'"
 
 
 class AddBirthdatInputError(InputError):
@@ -20,8 +20,20 @@ class AddBirthdatInputError(InputError):
 
 class ChangeInputError(InputError):
     def __str__(self):
-        return "ChangeInputError: 'change' command expects two arguments 'name' and 'phone'."
+        return "ChangeInputError: 'change' command expects two arguments 'name' and 'phone'"
 
+class ChangeEmailInputError(InputError):
+    def __str__(self):
+        return "ChangeInputError: 'change-email' command expects two arguments 'name' and  'email'."
+
+class FindContactsInputError(InputError):
+    def __str__(self):
+        return "FindContactsInputError: 'find-contacts' command expects one arguments 'name'."
+
+
+class AddAddressInputError(InputError):
+    def __str__(self):
+        return "AddBirthdatInputError: 'add-address' command expects two arguments 'name' and 'address'."
 
 class PhoneInputError(InputError):
     def __str__(self):
@@ -41,6 +53,10 @@ class InaccurateBirthdayFormat(InputError):
 class InaccuratePhoneFormat(InputError):
     def __str__(self):
         return "InaccuratePhoneFormat: Phone number must contain exactly 10 digits."
+
+class InaccurateEmailFormat(InputError):
+    def __str__(self):
+        return "InaccurateEmailFormat: The email address provided does not adhere to the standard email format."
 
 
 class NonExistingContact(InputError):
