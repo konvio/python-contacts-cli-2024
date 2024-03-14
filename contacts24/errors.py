@@ -10,7 +10,7 @@ class InputError(Exception):
 
 class AddContactInputError(InputError):
     def __str__(self):
-        return "AddContactInputError: 'add' command expects two arguments 'name' and 'phone'"
+        return "AddContactInputError: 'add-contact' command expects two arguments 'name' and 'phone'"
 
 
 class AddBirthdatInputError(InputError):
@@ -20,7 +20,7 @@ class AddBirthdatInputError(InputError):
 
 class ChangeInputError(InputError):
     def __str__(self):
-        return "ChangeInputError: 'change' command expects two arguments 'name' and 'phone'"
+        return "ChangeInputError: 'change-phone' command expects two arguments 'name' and 'phone'"
 
 class ChangeEmailInputError(InputError):
     def __str__(self):
@@ -37,7 +37,7 @@ class AddAddressInputError(InputError):
 
 class PhoneInputError(InputError):
     def __str__(self):
-        return "PhoneInputError: 'phone' command expects one argument 'name'."
+        return "PhoneInputError: 'show-phone' command expects one argument 'name'."
 
 
 class GetBirthdayInputError(InputError):
