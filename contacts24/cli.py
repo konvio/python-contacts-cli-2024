@@ -31,7 +31,7 @@ contacts = load_contacts_book()
 
 commands = {
     "hello": Command("hello", lambda x: "How can I help you?", is_hidden = True),
-    "help": Command("help",  lambda x: "\n\nAvailable commands: \n{0}\n".format(get_help()), is_hidden=True),
+    "help": Command("help",  lambda x: "\n\nAvailable commands: \n{0}\n".format(get_help(commands)), is_hidden=True),
     "add-contact": Command("add-contact",  partial(add_contact, contacts=contacts), "Adds a new contact", "add-contact <username> <phone>"),
     "change-phone": Command("change-phone", partial(change_contact, contacts=contacts), "Changes a contact's phone number", "change-phone <username> <phone>"), 
     "change-email": Command("change-email", partial(change_email, contacts=contacts), "Changes a contact's email", "change-email <username> <email>"),
@@ -50,7 +50,7 @@ commands = {
 
 
 def start():
-    print(Fore.LIGHTGREEN_EX + "Welcome to the Contants24!\n" + Fore.WHITE + "Type 'help' to see available commands.\n")
+    print(Fore.LIGHTGREEN_EX + "Welcome to the Contacts24!\n" + Fore.WHITE + "Type 'help' to see available commands.\n")
     command_completer = WordCompleter(list(commands.keys()))
     while True:
         try:
