@@ -98,28 +98,6 @@ class Record:
                 return p.value
         return None
 
-    def to_dict(self):
-        return {
-            "name": self.name.value,
-            "phones": [phone.value for phone in self.phones],
-            "emails": [email.value for email in self.emails],
-            "birthday": self.birthday.value if self.birthday else None,
-            "address": self.address.value if self.address else None,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict):
-        record = cls(data["name"])
-        for phone in data["phones"]:
-            record.add_phone(phone)
-        for email in data["emails"]:
-            record.add_email(email)
-        if data["birthday"]:
-            record.add_birthday(data["birthday"])
-        if data["address"]:
-            record.add_address(data["address"])
-        return record
-
     def __str__(self) -> str:
         return (
             f"Contact Information:\n"
