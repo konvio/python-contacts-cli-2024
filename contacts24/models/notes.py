@@ -38,4 +38,5 @@ class Notes(UserDict):
         for note_id, note_data in self.data.items():
             if search_query in note_data['text']:
                 found_notes.append((note_id, note_data))
-        return found_notes
+        return found_notes 
+    
