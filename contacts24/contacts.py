@@ -118,7 +118,7 @@ def get_all_contacts(args: CommandArguments, contacts: AddressBook) -> str:
     if not contacts:
         return "No contacts stored."
     else:
-        return "\n".join([str(contact) for contact in contacts.data.values()])
+        return str(contacts)
 
 
 def find_contacts(args: CommandArguments, contacts: AddressBook) -> str:
@@ -126,17 +126,20 @@ def find_contacts(args: CommandArguments, contacts: AddressBook) -> str:
         raise FindContactsInputError()
 
     name = args[0]
-    result = ''
+    result_book = AddressBook()
 
     for contact in contacts.data.values():
         if name in str(contact.name):
-            result += str(contact) + "\n"
+            result_book.add_record(contact)
 
-    if not result:
-        result = "No contacts found."
-
-    return result
-
+    if len(result_book) == 0:
+        return "No contacts found."
+    elif len(result_book) == 1:
+        contact = result_book.find(list(result_book.data.keys())[0])
+        return contact
+    else:
+        return result_book
+    
 
 @input_error
 def change_email(args: CommandArguments, contacts: AddressBook) -> str:
