@@ -73,7 +73,6 @@ class InnacutateBirthdaysCommand(InputError):
     def __str__(self):
         return "InnacutateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
 
-
 def input_error(func):
     def inner(*args, **kwargs):
         try:
