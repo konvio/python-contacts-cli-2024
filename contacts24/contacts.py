@@ -6,6 +6,7 @@ from contacts24.config import ADDRESSBOOK_FILE
 from .models.address_book import AddressBook
 from .models.record import Record
 from .errors import (
+    AppError,
     AddBirthdatInputError,
     AddContactInputError,
     ChangeInputError,
@@ -39,6 +40,9 @@ def load_contacts_book() -> AddressBook:
         contacts = AddressBook.load_from_file(ADDRESSBOOK_FILE)
     except FileNotFoundError:
         print(f"File {ADDRESSBOOK_FILE} not found. Initializing an empty AddressBook.")
+        contacts = AddressBook()
+    except AppError:
+        print(f"File {ADDRESSBOOK_FILE} cannot be loaded. Initializing an empty AddressBook.")
         contacts = AddressBook()
     return contacts
 
