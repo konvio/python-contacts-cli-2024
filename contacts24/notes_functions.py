@@ -5,12 +5,25 @@ from contacts24.errors import (
     ChangeNoteError,
     FindNoteInputError,
     DeleteNoteError,
+    InvalidNoteIdError,
+    NonExistingNote,
+    AddTagError,
     AppError
 )
 from contacts24.models.notes import Notes
 
+CommandArguments = list[str]
+
 
 def load_notes(filepath: str) -> Notes:
+    """Load notes from file
+
+    Args:
+        filepath (str): path to local file
+
+    Returns:
+        Notes: notes from file system or new instance in case of issues with local file
+    """
     try:
         notes = Notes.load_from_file(filepath)
     except FileNotFoundError:
@@ -21,17 +34,36 @@ def load_notes(filepath: str) -> Notes:
         notes = Notes()
     return notes
 
-def show_all_notes(args, notes: Notes) -> str:
-    """Shows all notes from the notebook."""
+def show_all_notes(args: CommandArguments, notes: Notes) -> str:
+    """Shows all notes from the notebook.
+
+    Args:
+        args (CommandArguments): list of arguments from user
+        notes (Notes): notes
+
+    Returns:
+        str: list of all notes or message for no notes
+    """
     if not notes:
-        return "No notes stored"
+        return "You don't have any notes.\n\nUse `add-note` to create one.\n\n"
     
     return "\n".join([str(note) for note in notes.data.values()])
 
 
 @input_error
-def add_note(args, notes):
-    """Adds a note to the notebook."""
+def add_note(args: CommandArguments, notes: Notes) -> str:
+    """Adds a note to the notebook.
+
+    Args:
+        args (CommandArguments): User parameters. Expected note text
+        notes (Notes): Notes
+
+    Raises:
+        AddNoteInputError: if user doesn't provide necessary arguments
+
+    Returns:
+        str: message about successfully added note
+    """
     if args is None or len(args) < 1:
         raise AddNoteInputError()
 
@@ -42,8 +74,19 @@ def add_note(args, notes):
 
 
 @input_error
-def change_note(args, notes: Notes):
-    """Changes the text of an existing note."""
+def change_note(args: CommandArguments, notes: Notes) -> str:
+    """Changes the text of an existing note.
+
+    Args:
+        args (CommandArguments): User parameters. Expected note id and new note text
+        notes (Notes): Notes
+
+    Raises:
+        ChangeNoteError: if user doesn't provide necessary arguments
+
+    Returns:
+        str: message about successfully changed note
+    """
     if args is None or len(args) < 2:
         raise ChangeNoteError()
     
@@ -62,7 +105,13 @@ def delete_note(args, notes):
         raise DeleteNoteError()
     
     key = args[0]
-    notes.delete_note(key)
+    
+    try:
+        key_int = int(key)
+    except Exception:
+        raise InvalidNoteIdError()
+    
+    notes.delete_note(key_int)
     
     return "Note deleted."
 
@@ -80,3 +129,68 @@ def search_text(args, notes: Notes):
         return "\n----------------------------\n".join([str(note) for note in found_notes])
     else:
         return f"No notes found by the following text `{search_query}`."
+    
+
+@input_error
+def add_tag(args: CommandArguments, notes: Notes) -> str:
+    """Add tag to note
+
+    Args:
+        args (CommandArguments): User parameters. Expected note id and tag
+        notes (Notes): Notes
+
+    Raises:
+        ChangeNoteError: if user doesn't provide necessary arguments
+
+    Returns:
+        str: message about successfully add tag to note
+    """
+    if args is None or len(args) < 2:
+        raise AddTagError()
+    
+    key, tag = args[:2]
+    
+    try:
+        key_int = int(key)
+    except Exception:
+        raise InvalidNoteIdError()
+    
+    if not notes.is_note_exists(key_int):
+        raise NonExistingNote()
+    
+    notes.add_tag(key_int, tag)
+    
+    return f"Tag added to note #{key}."
+
+
+@input_error
+def delete_tag(args: CommandArguments, notes: Notes) -> str:
+    """Delete tag from note
+
+    Args:
+        args (CommandArguments): User parameters. Expected note id and tag
+        notes (Notes): Notes
+
+    Raises:
+        ChangeNoteError: if user doesn't provide necessary arguments
+
+    Returns:
+        str: message about successfully delete tag from note
+    """
+    if args is None or len(args) < 2:
+        raise AddTagError()
+    
+    key, tag = args[:2]
+    
+    try:
+        key_int = int(key)
+    except Exception:
+        raise InvalidNoteIdError()
+    
+    if not notes.is_note_exists(key_int):
+        raise NonExistingNote()
+    
+    notes.delete_tag(key_int, tag)
+    
+    return f"Tag deleted from note #{key}."
+

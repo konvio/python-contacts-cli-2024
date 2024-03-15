@@ -95,9 +95,25 @@ class ChangeNoteError(InputError):
     def __str__(self):
         return "ChangeNoteError: 'change-note' command expects two arguments 'id' and 'new_text'"
 
+class AddTagError(InputError):
+    def __str__(self):
+        return "AddTagError: 'add-tag' command expects two arguments 'id' and 'tag'"
+
+class DeleteTagError(InputError):
+    def __str__(self):
+        return "DeleteTagError: 'delete-tag' command expects two arguments 'id' and 'tag'"
+
+class DeleteMissingError(InputError):
+    def __str__(self):
+        return "DeleteMissingError: This tag does not exist or has been deleted"
+
 class NonExistingNote(InputError):
     def __str__(self):
         return "NonExistingNote: This note does not exist or has been deleted"
+    
+class TagAlreadyExistsError(InputError):
+    def __str__(self):
+        return "TagAlreadyExists: This tag already exists"
 
 class FindNoteInputError(InputError):
     def __str__(self):
@@ -106,6 +122,10 @@ class FindNoteInputError(InputError):
 class DeleteNoteError(InputError):
     def __str__(self):
         return "DeleteNoteError: 'delete-note' command expects one arguments 'id'."
+
+class InvalidNoteIdError(InputError):
+    def __str__(self):
+        return "InvalidNoteIdError: Invalid note id."
 
 #endregion
 

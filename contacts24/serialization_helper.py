@@ -58,6 +58,7 @@ def note_serialization(note: Note) -> dict:
     return {
         "id": note.id.value,
         "text": note.text.value,
+        "tags": [tag.value for tag in note.tags],
     }
 
 def note_deserialization(data: dict) -> Note:
@@ -71,6 +72,9 @@ def note_deserialization(data: dict) -> Note:
     """
     note = Note(int(data["id"]), data["text"])
     
+    for tag in data["tags"]:
+        note.add_tag(tag)
+        
     return note
 
 #endregion

@@ -40,6 +40,11 @@ class Notes(UserDict):
         
         return list(self.data.values())
 
+    def is_note_exists(self, id: int) -> bool:
+        """Is note exists by id"""
+        
+        return id in self.data.keys()
+
     def delete_note(self, id: int) -> None:
         """Deletes a note by its id."""
         
@@ -58,6 +63,23 @@ class Notes(UserDict):
                 found_notes.append(note_data)
         return found_notes 
         
+
+    def add_tag(self, id: int, tag: str) -> None:
+        """Add tag to note by id."""
+        
+        if id not in self.data:
+            raise NonExistingNote()
+        
+        self.data[id].add_tag(tag)
+
+    def delete_tag(self, id: int, tag: str) -> None:
+        """Delete tag from note by id."""
+        
+        if id not in self.data:
+            raise NonExistingNote()
+        
+        self.data[id].delete_tag(tag)
+
 
     def save_to_file(self, filepath: str = NOTES_FILE) -> None:
         from contacts24.db import save_notes
