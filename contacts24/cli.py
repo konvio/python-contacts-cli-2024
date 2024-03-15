@@ -22,13 +22,32 @@ from .contacts import (
     get_contact_phone,
     get_upcoming_birthdays,
     load_contacts_book,
+    delete_contact,
     parse_input,
 )
+from .notes_functions import (
+    show_all_notes,
+    add_note,
+    change_note,
+    search_text,
+    delete_note
+)
+from contacts24.models.notes import Notes
 
 init(autoreset=True)
 
 
 contacts = load_contacts_book(get_file_path(ADDRESSBOOK_FILE))
+
+def mock_notes():
+    mock_notes = Notes()
+    mock_notes.add_note("Some text")
+    mock_notes.add_note("Second text about second text not to forget second text")
+    mock_notes.add_note("Third note")
+    return mock_notes
+
+
+notes = mock_notes()
 
 commands = {
     "hello": Command("hello", lambda x: "How can I help you?\n", is_hidden = True),
@@ -42,11 +61,13 @@ commands = {
     "show-birthday": Command("show-birthday", partial(get_contact_birthday, contacts=contacts),  "Prints a contact's birthday", "show-birthday <username>"), 
     "birthdays": Command("birthdays", partial(get_upcoming_birthdays, contacts=contacts), "Prints upcoming birthdays in N days", "birthdays <n_days>"), 
     "show-all-contacts": Command("show-all-contacts", partial(get_all_contacts, contacts=contacts), "Prints all contacts", "show-all-contacts"), 
-    "find-contacts": Command("find-contact", partial(find_contacts, contacts=contacts), "Prints contacts by name", "find-contacts"),
-    "add-note": Command("add-note", lambda x: "In development"),
-    "change-note": Command("change-note", lambda x: "In development"), 
-    "find-note": Command("find-note", lambda x: "In development"), 
-    "show-all-notes": Command("show-all-notes", lambda x: "In development"), 
+    "find-contacts": Command("find-contact", partial(find_contacts, contacts=contacts), "Prints contacts by name", "find-contacts  <name>"),
+    "delete-contact": Command("delete-contact", partial(delete_contact, contacts=contacts), "Deletes contact by name", "delete-contact <name>"),
+    "add-note": Command("add-note", partial(add_note, notes=notes), "Adds a new note", "add-note <text>"), 
+    "change-note": Command("change-note", partial(change_note, notes=notes), "Changes a note's text", "change_note <id> <new_text>"), 
+    "find-note": Command("find-note", partial(search_text, notes=notes), "Prints notes by search query", "find-note <search_query>"), 
+    "show-all-notes": Command("show-all-notes", partial(show_all_notes, notes=notes), "Prints all notes", "show-all-notes"), 
+    "delete-note": Command("delete-notes", partial(delete_note, notes=notes), "Deletes notes by id", "delete-note <id>"), 
 }
 
 

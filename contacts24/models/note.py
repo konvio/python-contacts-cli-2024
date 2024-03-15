@@ -8,7 +8,7 @@ class Text(Field):
     pass 
 
 class Note():
-    def __init__(self, id: int, title: str, text=""):
+    def __init__(self, id: int, text: str):
         self.id = Id(id)
         self.text = Text(text)
         self.tags = []
@@ -31,6 +31,5 @@ class Note():
     def __str__(self):
         return (f"Note:\n"
                 f"  Id: {self.id}\n"
-                f"  Tags: {', '.join(self.tags)}\n\n"
-                f"  Text: {self.text}")
-
+                f"  Tags: {', '.join(self.tags)}\n"
+                f"  Text: {self.text.value}")

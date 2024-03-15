@@ -17,6 +17,7 @@ from .errors import (
     NonExistingContact,
     PhoneInputError,
     InnacutateBirthdaysCommand,
+    DeleteContactError,
     input_error,
 )
 
@@ -53,7 +54,7 @@ def add_contact(args: CommandArguments, contacts: AddressBook) -> str:
     if args is None or len(args) < 2:
         raise AddContactInputError()
 
-    name, phone= args[:2]
+    name, phone = args[:2]
     new_contact = Record(name)
     new_contact.add_phone(phone)
     contacts.add_record(new_contact)
@@ -112,6 +113,21 @@ def get_contact_birthday(args: CommandArguments, contacts: AddressBook) -> str:
         raise NonExistingContact()
 
     return contact.birthday
+
+
+@input_error
+def delete_contact(args: CommandArguments, contacts: AddressBook) -> str:
+    """Deletes a note from the notebook."""
+    if args is None or len(args) < 1:
+        raise DeleteContactError()
+    
+    name = args[0]
+    contact = contacts.find(name)
+    if not contact:
+        raise NonExistingContact()
+    contacts.delete(name)
+    
+    return "Contact deleted."
 
 
 @input_error
