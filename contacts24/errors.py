@@ -52,6 +52,10 @@ class DeleteNoteError(InputError):
         return "DeleteNoteError: 'delete-note' command expects one arguments 'id'."
 
 
+class DeleteContactError(InputError):
+    def __str__(self):
+        return "DeleteContactError: 'delete-contact' command expects one arguments 'name'."
+
 
 class AddAddressInputError(InputError):
     def __str__(self):
