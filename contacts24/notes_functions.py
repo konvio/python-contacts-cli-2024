@@ -108,7 +108,7 @@ def delete_note(args, notes):
     
     try:
         key_int = int(key)
-    except:
+    except Exception:
         raise InvalidNoteIdError()
     
     notes.delete_note(key_int)
@@ -152,7 +152,7 @@ def add_tag(args: CommandArguments, notes: Notes) -> str:
     
     try:
         key_int = int(key)
-    except:
+    except Exception:
         raise InvalidNoteIdError()
     
     if not notes.is_note_exists(key_int):
@@ -184,7 +184,7 @@ def delete_tag(args: CommandArguments, notes: Notes) -> str:
     
     try:
         key_int = int(key)
-    except:
+    except Exception:
         raise InvalidNoteIdError()
     
     if not notes.is_note_exists(key_int):
