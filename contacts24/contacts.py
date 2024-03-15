@@ -21,7 +21,6 @@ from .errors import (
     input_error,
 )
 
-Contacts = dict[str, str]
 CommandArguments = list[str]
 
 
