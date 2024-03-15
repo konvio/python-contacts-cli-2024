@@ -73,10 +73,25 @@ class InAccurateBirthdaysCommand(InputError):
 
 #endregion
 
+#region Notes errors
+
 class NonExistingNote(InputError):
     def __str__(self):
         return "NonExistingNote: This note does not exist or has been deleted"
 
+
+class EmptyNoteError(InputError)
+    def __str__(self):
+        return "EmptyNoteError: No text for note was provided"
+
+
+class NotEnoughArgumentsInputError(InputError):
+    def __str__(self):
+        return "NotEnoughArgumentsInputError: add-note' command expects two arguments 'name' and 'phone'"
+
+
+
+#endregion
 
 def input_error(func):
     def inner(*args, **kwargs):

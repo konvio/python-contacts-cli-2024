@@ -1,25 +1,40 @@
 
+from .models.notes import Notes
 
 from contacts24.errors import input_error
 
 
+def load_notes(filepath: str) -> Notes:
+    try:
+        notes = Notes.load_from_file(filepath)
+    except FileNotFoundError:
+        print(f"File {filepath} not found. Initializing an empty Notes.")
+        notes = Notes()
+    except AppError:
+        print(f"File {filepath} cannot be loaded. Initializing an empty Notes.")
+        notes = Notes()
+    return notes
 
 @input_error
-def add_note(args, note_book):
+def add_note(args, note_book: Notes) -> str:
     """Adds a note to the notebook."""
+    if args is None:
+        raise EmptyNoteError()
     
-    note_id, text = args
-    note_book.add_note(note_id, text)
+    text,  = args
+    index = note_book.add_note(text)
     
-    return "Note added."
+    return f"Note added (by #{index})."
 
 
 @input_error
 def change_note(args, note_book):
     """Changes the text of an existing note."""
+    if args is None or len(args) < 2:
+        raise NotEnoughArgumentsInputError()
     
-    key, new_text = args
-    note_book.change_note(int(key), new_text)
+    id, new_text = args
+    note_book.change_note(int(id), new_text)
     
     return "Note changed."
 
