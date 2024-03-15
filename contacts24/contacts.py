@@ -18,6 +18,7 @@ from .errors import (
     PhoneInputError,
     InaccurateBirthdaysCommand,
     DeleteContactError,
+    ChangeNameInputError,
     input_error,
 )
 
@@ -185,6 +186,22 @@ def change_email(args: CommandArguments, contacts: AddressBook) -> str:
         contact.add_email(email)
 
     return f"Email for {name} updated."
+
+
+@input_error
+def change_name(args: CommandArguments, contacts: AddressBook) -> str:
+    if args is None or len(args) < 2:
+        raise ChangeNameInputError()
+
+    name, new_name = args[:2]
+    contact = contacts.find(name)
+    if not contact:
+        raise NonExistingContact()
+    contact.name.value = new_name
+    contacts.delete(name)
+    contacts.add_record(contact)
+    return f"Contact {name} was changed to {new_name}"
+
 
 @input_error
 def add_address(args: CommandArguments, contacts: AddressBook) -> str:
