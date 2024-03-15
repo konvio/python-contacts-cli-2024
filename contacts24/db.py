@@ -57,7 +57,7 @@ def get_notes(filename: str = NOTES_FILE) -> Notes:
         notes_list = json.load(file)
         for note_dict in notes_list:
             note = note_deserialization(note_dict)
-            notes.add_note(note)
+            notes.add_note_byid(note)
     
     return notes
 
