@@ -15,6 +15,6 @@ def get_file_path(filename = "") -> str:
         folder = os.getcwd()
     
     if filename and filename != '':
-        folder = folder + "\\" + filename
+        folder = os.path.join(folder , filename)
 
     return folder
