@@ -72,6 +72,14 @@ class Notes(UserDict):
         
         self.data[id].add_tag(tag)
 
+    def delete_tag(self, id: int, tag: str) -> None:
+        """Delete tag from note by id."""
+        
+        if id not in self.data:
+            raise NonExistingNote()
+        
+        self.data[id].delete_tag(tag)
+
 
     def save_to_file(self, filepath: str = NOTES_FILE) -> None:
         from contacts24.db import save_notes

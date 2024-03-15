@@ -143,7 +143,7 @@ def add_tag(args: CommandArguments, notes: Notes) -> str:
         ChangeNoteError: if user doesn't provide necessary arguments
 
     Returns:
-        str: message about successfully changed note
+        str: message about successfully add tag to note
     """
     if args is None or len(args) < 2:
         raise AddTagError()
@@ -161,4 +161,36 @@ def add_tag(args: CommandArguments, notes: Notes) -> str:
     notes.add_tag(key_int, tag)
     
     return f"Tag added to note #{key}."
+
+
+@input_error
+def delete_tag(args: CommandArguments, notes: Notes) -> str:
+    """Delete tag from note
+
+    Args:
+        args (CommandArguments): User parameters. Expected note id and tag
+        notes (Notes): Notes
+
+    Raises:
+        ChangeNoteError: if user doesn't provide necessary arguments
+
+    Returns:
+        str: message about successfully delete tag from note
+    """
+    if args is None or len(args) < 2:
+        raise AddTagError()
+    
+    key, tag = args[:2]
+    
+    try:
+        key_int = int(key)
+    except:
+        raise InvalidNoteIdError()
+    
+    if not notes.is_note_exists(key_int):
+        raise NonExistingNote()
+    
+    notes.delete_tag(key_int, tag)
+    
+    return f"Tag deleted from note #{key}."
 

@@ -33,6 +33,7 @@ from .notes_functions import (
     delete_note,
     
     add_tag,
+    delete_tag,
     
     load_notes
 )
@@ -59,6 +60,7 @@ commands = {
     "delete-contact": Command("delete-contact", partial(delete_contact, contacts=contacts), "Deletes contact by name", "delete-contact <name>"),
     "add-note": Command("add-note", partial(add_note, notes=notes), "Adds a new note", "add-note <text>"), 
     "add-tag": Command("add-tag", partial(add_tag, notes=notes), "Adds a tag to note", "add-tag <id> <tag>"), 
+    "delete-tag": Command("delete-tag", partial(delete_tag, notes=notes), "Delete a tag to note", "delete-tag <id> <tag>"), 
     "change-note": Command("change-note", partial(change_note, notes=notes), "Changes a note's text", "change_note <id> <new_text>"), 
     "find-note": Command("find-note", partial(search_text, notes=notes), "Prints notes by search query", "find-note <search_query>"), 
     "show-all-notes": Command("show-all-notes", partial(show_all_notes, notes=notes), "Prints all notes", "show-all-notes"), 

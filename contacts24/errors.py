@@ -93,6 +93,14 @@ class AddTagError(InputError):
     def __str__(self):
         return "AddTagError: 'add-tag' command expects two arguments 'id' and 'tag'"
 
+class DeleteTagError(InputError):
+    def __str__(self):
+        return "DeleteTagError: 'delete-tag' command expects two arguments 'id' and 'tag'"
+
+class DeleteMissingError(InputError):
+    def __str__(self):
+        return "DeleteMissingError: This tag does not exist or has been deleted"
+
 class NonExistingNote(InputError):
     def __str__(self):
         return "NonExistingNote: This note does not exist or has been deleted"
