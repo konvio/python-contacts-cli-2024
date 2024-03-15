@@ -7,7 +7,7 @@ from .models.record import Record
 from .birthdays import get_birthdays_within_days
 from .errors import (
     AppError,
-    AddBirthdatInputError,
+    AddBirthdayInputError,
     AddContactInputError,
     ChangeInputError,
     ChangeEmailInputError,
@@ -63,7 +63,7 @@ def add_contact(args: CommandArguments, contacts: AddressBook) -> str:
 @input_error
 def add_birthday(args: CommandArguments, contacts: AddressBook) -> str:
     if args is None or len(args) < 2:
-        raise AddBirthdatInputError()
+        raise AddBirthdayInputError()
 
     name, date = args[:2]
     contact = contacts.find(name)

@@ -13,9 +13,9 @@ class AddContactInputError(InputError):
         return "AddContactInputError: 'add-contact' command expects two arguments 'name' and 'phone'"
 
 
-class AddBirthdatInputError(InputError):
+class AddBirthdayInputError(InputError):
     def __str__(self):
-        return "AddBirthdatInputError: 'add-birthday' command expects two arguments 'name' and 'birthday'."
+        return "AddBirthdayInputError: 'add-birthday' command expects two arguments 'name' and 'birthday'."
 
 
 class ChangeInputError(InputError):
@@ -24,7 +24,7 @@ class ChangeInputError(InputError):
 
 class ChangeEmailInputError(InputError):
     def __str__(self):
-        return "ChangeInputError: 'change-email' command expects two arguments 'name' and  'email'."
+        return "ChangeEmailInputError: 'change-email' command expects two arguments 'name' and  'email'."
 
 class FindContactsInputError(InputError):
     def __str__(self):
@@ -33,7 +33,7 @@ class FindContactsInputError(InputError):
 
 class AddAddressInputError(InputError):
     def __str__(self):
-        return "AddBirthdatInputError: 'add-address' command expects two arguments 'name' and 'address'."
+        return "AddAddressInputError: 'add-address' command expects two arguments 'name' and 'address'."
 
 class PhoneInputError(InputError):
     def __str__(self):
