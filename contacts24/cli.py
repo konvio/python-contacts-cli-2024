@@ -86,6 +86,7 @@ def start():
             if command == "exit":
                 print(Fore.LIGHTGREEN_EX + "Good bye!")
                 contacts.save_to_file(get_file_path(ADDRESSBOOK_FILE))
+                notes.save_to_file(get_file_path(NOTES_FILE))
                 break
 
             if command in commands:

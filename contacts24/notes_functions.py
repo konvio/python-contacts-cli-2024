@@ -4,7 +4,8 @@ from contacts24.errors import (
     AddNoteInputError,
     ChangeNoteError,
     FindNoteInputError,
-    DeleteNoteError
+    DeleteNoteError,
+    AppError
 )
 from contacts24.models.notes import Notes
 
@@ -19,7 +20,6 @@ def load_notes(filepath: str) -> Notes:
         print(f"File {filepath} cannot be loaded. Initializing an empty Notes.")
         notes = Notes()
     return notes
-
 
 def show_all_notes(args, notes: Notes) -> str:
     """Shows all notes from the notebook."""
@@ -62,7 +62,7 @@ def delete_note(args, notes):
         raise DeleteNoteError()
     
     key = args[0]
-    notes.delete_note(int(key))
+    notes.delete_note(key)
     
     return "Note deleted."
 

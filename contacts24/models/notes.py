@@ -58,9 +58,16 @@ class Notes(UserDict):
                 found_notes.append(note_data)
         return found_notes 
         
-    
+
+    def save_to_file(self, filepath: str = NOTES_FILE) -> None:
+        from contacts24.db import save_notes
+        if filepath:
+            save_notes(self, filepath)
+        else:
+            save_notes(self)
+            
     @staticmethod
-    def load_from_file(filepath: str = NOTES_FILE) -> Notes:
+    def load_from_file(filepath: str = NOTES_FILE) -> "Notes":
         from contacts24.db import get_notes
         if filepath:
             return get_notes(filepath)
