@@ -16,13 +16,12 @@ class Notes(UserDict):
     def add_note_byid(self, note: Note) -> None:
         """Adds a new note to the notebook by id"""
     
-        self.data[note.id] = note
+        self.data[note.id.value] = note
 
     def _get_new_note_index(self) -> int:
         """Get new index for new note"""
         
         max_index = max(self.data.keys()) if len(self.data) > 0 else 0
-        
         return max_index + 1
 
     def change_note(self, id: int, new_text: str) -> None:
