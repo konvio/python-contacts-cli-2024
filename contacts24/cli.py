@@ -39,7 +39,7 @@ commands = {
     "show-phone": Command("show-phone", partial(get_contact_phone, contacts=contacts), "Prints a contact's number", "show-phone <username>"), 
     "add-birthday": Command("add-birthday", partial(add_birthday, contacts=contacts),  "Adds a contact's birthday", "add-birthday <username> <date>"), 
     "show-birthday": Command("show-birthday", partial(get_contact_birthday, contacts=contacts),  "Prints a contact's birthday", "show-birthday <username>"), 
-    "birthdays": Command("birthdays", partial(get_upcoming_birthdays, contacts=contacts), "Prints upcoming birthdays", "birthdays"), 
+    "birthdays": Command("birthdays", partial(get_upcoming_birthdays, contacts=contacts), "Prints upcoming birthdays in N days", "birthdays <n_days>"), 
     "show-all-contacts": Command("show-all-contacts", partial(get_all_contacts, contacts=contacts), "Prints all contacts", "show-all-contacts"), 
     "find-contacts": Command("find-contact", partial(find_contacts, contacts=contacts), "Prints contacts by name", "find-contacts"),
     "add-note": Command("add-note", lambda x: "In development"),

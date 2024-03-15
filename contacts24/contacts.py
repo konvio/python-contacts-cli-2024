@@ -5,7 +5,9 @@ from typing import Optional
 from contacts24.config import ADDRESSBOOK_FILE
 from .models.address_book import AddressBook
 from .models.record import Record
+from .birthdays import get_birthdays_within_days
 from .errors import (
+    AppError,
     AddBirthdatInputError,
     AddContactInputError,
     ChangeInputError,
@@ -15,6 +17,7 @@ from .errors import (
     GetBirthdayInputError,
     NonExistingContact,
     PhoneInputError,
+    InnacutateBirthdaysCommand,
     input_error,
 )
 
@@ -39,6 +42,9 @@ def load_contacts_book() -> AddressBook:
         contacts = AddressBook.load_from_file(ADDRESSBOOK_FILE)
     except FileNotFoundError:
         print(f"File {ADDRESSBOOK_FILE} not found. Initializing an empty AddressBook.")
+        contacts = AddressBook()
+    except AppError:
+        print(f"File {ADDRESSBOOK_FILE} cannot be loaded. Initializing an empty AddressBook.")
         contacts = AddressBook()
     return contacts
 
@@ -111,7 +117,15 @@ def get_contact_birthday(args: CommandArguments, contacts: AddressBook) -> str:
 
 @input_error
 def get_upcoming_birthdays(args: CommandArguments, contacts: AddressBook) -> str:
-    return contacts.get_birthdays_per_week()
+    try:
+        n_days = int(args[0])
+    except TypeError:
+        raise InnacutateBirthdaysCommand()
+
+    if n_days >= 0:
+        return get_birthdays_within_days(contacts, n_days)
+    else:
+        raise InnacutateBirthdaysCommand()
 
 
 def get_all_contacts(args: CommandArguments, contacts: AddressBook) -> str:
@@ -151,7 +165,7 @@ def change_email(args: CommandArguments, contacts: AddressBook) -> str:
     if not contact:
         raise NonExistingContact()
 
-    if  len(contact.emails):
+    if len(contact.emails):
         contact.edit_email(contact.emails[0].value, email)
     else:
         contact.add_email(email)
