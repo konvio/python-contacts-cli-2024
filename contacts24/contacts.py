@@ -191,7 +191,8 @@ def add_address(args: CommandArguments, contacts: AddressBook) -> str:
     if args is None or len(args) < 2:
         raise AddAddressInputError()
 
-    name, address = args[:2]
+    name = args[0]
+    address = " ".join(args[1:])
     contact = contacts.find(name)
     if not contact:
         raise NonExistingContact()
