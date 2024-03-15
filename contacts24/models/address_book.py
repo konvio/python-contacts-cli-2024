@@ -19,18 +19,18 @@ class AddressBook(UserDict):
         else:
             print(f"No records found by the name {name}")
 
-    def save_to_file(self, filename: str = ADDRESSBOOK_FILE) -> None:
+    def save_to_file(self, filepath: str = ADDRESSBOOK_FILE) -> None:
         from contacts24.db import save_address_book
-        if filename:
-            save_address_book(self, filename)
+        if filepath:
+            save_address_book(self, filepath)
         else:
             save_address_book(self)
 
     @staticmethod
-    def load_from_file(filename: str = ADDRESSBOOK_FILE) -> "AddressBook":
+    def load_from_file(filepath: str = ADDRESSBOOK_FILE) -> "AddressBook":
         from contacts24.db import get_contacts
-        if filename:
-            return get_contacts(filename)
+        if filepath:
+            return get_contacts(filepath)
         else:
             return get_contacts()
 
