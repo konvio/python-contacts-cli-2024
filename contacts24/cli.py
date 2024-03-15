@@ -46,7 +46,7 @@ def mock_notes():
 notes = mock_notes()
 
 commands = {
-    "hello": Command("hello", lambda x: "How can I help you?", is_hidden = True),
+    "hello": Command("hello", lambda x: "How can I help you?\n", is_hidden = True),
     "help": Command("help",  lambda x: "\n\nAvailable commands: \n{0}\n".format(get_help(commands)), is_hidden=True),
     "add-contact": Command("add-contact",  partial(add_contact, contacts=contacts), "Adds a new contact", "add-contact <username> <phone>"),
     "change-phone": Command("change-phone", partial(change_contact, contacts=contacts), "Changes a contact's phone number", "change-phone <username> <phone>"), 
@@ -66,7 +66,7 @@ commands = {
 
 
 def start():
-    print(Fore.LIGHTGREEN_EX + "Welcome to the Contacts24!\n" + Fore.WHITE + "Type 'help' to see available commands.\n")
+    print(Fore.LIGHTGREEN_EX + "\n\nWelcome to the Contacts24!\n\n" + Fore.WHITE + "\nType 'help' to see available commands.\n\n")
     command_completer = WordCompleter(list(commands.keys()))
     while True:
         try:
@@ -85,4 +85,4 @@ def start():
                 help_text = get_help(commands)
                 print(Fore.RED + f"Unknown command '{command}', please try again.\n{help_text}")
         except Exception as e:
-            print(Fore.RED + f"Unexpected error occured {e}")
+            print(Fore.RED + f"Unexpected error occured {e}\n")
