@@ -9,8 +9,18 @@ from contacts24.errors import (
 )
 from contacts24.models.notes import Notes
 
+CommandArguments = list[str]
+
 
 def load_notes(filepath: str) -> Notes:
+    """Load notes from file
+
+    Args:
+        filepath (str): path to local file
+
+    Returns:
+        Notes: notes from file system or new instance in case of issues with local file
+    """
     try:
         notes = Notes.load_from_file(filepath)
     except FileNotFoundError:
@@ -21,17 +31,36 @@ def load_notes(filepath: str) -> Notes:
         notes = Notes()
     return notes
 
-def show_all_notes(args, notes: Notes) -> str:
-    """Shows all notes from the notebook."""
+def show_all_notes(args: CommandArguments, notes: Notes) -> str:
+    """Shows all notes from the notebook.
+
+    Args:
+        args (CommandArguments): list of arguments from user
+        notes (Notes): notes
+
+    Returns:
+        str: list of all notes or message for no notes
+    """
     if not notes:
-        return "No notes stored"
+        return "You don't have any notes.\n\nUse `add-note` to create one."
     
     return "\n".join([str(note) for note in notes.data.values()])
 
 
 @input_error
-def add_note(args, notes):
-    """Adds a note to the notebook."""
+def add_note(args: CommandArguments, notes: Notes) -> str:
+    """Adds a note to the notebook.
+
+    Args:
+        args (CommandArguments): User parameters. Expected note text
+        notes (Notes): Notes
+
+    Raises:
+        AddNoteInputError: if user doesn't provide necessary arguments
+
+    Returns:
+        str: message about successfully added note
+    """
     if args is None or len(args) < 1:
         raise AddNoteInputError()
 
@@ -42,8 +71,19 @@ def add_note(args, notes):
 
 
 @input_error
-def change_note(args, notes: Notes):
-    """Changes the text of an existing note."""
+def change_note(args: CommandArguments, notes: Notes) -> str:
+    """Changes the text of an existing note.
+
+    Args:
+        args (CommandArguments): User parameters. Expected note id and new note text
+        notes (Notes): Notes
+
+    Raises:
+        ChangeNoteError: if user doesn't provide necessary arguments
+
+    Returns:
+        str: message about successfully changed note
+    """
     if args is None or len(args) < 2:
         raise ChangeNoteError()
     
