@@ -32,6 +32,8 @@ from .notes_functions import (
     search_text,
     delete_note,
     
+    add_tag,
+    
     load_notes
 )
 
@@ -56,6 +58,7 @@ commands = {
     "find-contacts": Command("find-contact", partial(find_contacts, contacts=contacts), "Prints contacts by name", "find-contacts  <name>"),
     "delete-contact": Command("delete-contact", partial(delete_contact, contacts=contacts), "Deletes contact by name", "delete-contact <name>"),
     "add-note": Command("add-note", partial(add_note, notes=notes), "Adds a new note", "add-note <text>"), 
+    "add-tag": Command("add-tag", partial(add_tag, notes=notes), "Adds a tag to note", "add-tag <id> <tag>"), 
     "change-note": Command("change-note", partial(change_note, notes=notes), "Changes a note's text", "change_note <id> <new_text>"), 
     "find-note": Command("find-note", partial(search_text, notes=notes), "Prints notes by search query", "find-note <search_query>"), 
     "show-all-notes": Command("show-all-notes", partial(show_all_notes, notes=notes), "Prints all notes", "show-all-notes"), 
@@ -67,21 +70,18 @@ def start():
     print(Fore.LIGHTGREEN_EX + "\n\nWelcome to the Contacts24!\n\n" + Fore.WHITE + "\nType 'help' to see available commands.\n\n")
     command_completer = WordCompleter(list(commands.keys()))
     while True:
-        try:
-            style = Style.from_dict(PROMPT_STYLE)
-            user_input = prompt(PROMPT_MESSAGE, style=style, completer=command_completer)
-            command, args = parse_input(user_input)
+        style = Style.from_dict(PROMPT_STYLE)
+        user_input = prompt(PROMPT_MESSAGE, style=style, completer=command_completer)
+        command, args = parse_input(user_input)
 
-            if command == "exit":
-                print(Fore.LIGHTGREEN_EX + "Good bye!")
-                contacts.save_to_file(get_file_path(ADDRESSBOOK_FILE))
-                notes.save_to_file(get_file_path(NOTES_FILE))
-                break
+        if command == "exit":
+            print(Fore.LIGHTGREEN_EX + "Good bye!")
+            contacts.save_to_file(get_file_path(ADDRESSBOOK_FILE))
+            notes.save_to_file(get_file_path(NOTES_FILE))
+            break
 
-            if command in commands:
-                print(Fore.WHITE + str(commands[command]()(args)))
-            else:
-                help_text = get_help(commands)
-                print(Fore.RED + f"Unknown command '{command}', please try again.\n{help_text}")
-        except Exception as e:
-            print(Fore.RED + f"Unexpected error occured {e}\n")
+        if command in commands:
+            print(Fore.WHITE + str(commands[command]()(args)))
+        else:
+            help_text = get_help(commands)
+            print(Fore.RED + f"Unknown command '{command}', please try again.\n{help_text}")

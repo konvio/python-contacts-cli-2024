@@ -5,6 +5,9 @@ from contacts24.errors import (
     ChangeNoteError,
     FindNoteInputError,
     DeleteNoteError,
+    InvalidNoteIdError,
+    NonExistingNote,
+    AddTagError,
     AppError
 )
 from contacts24.models.notes import Notes
@@ -42,7 +45,7 @@ def show_all_notes(args: CommandArguments, notes: Notes) -> str:
         str: list of all notes or message for no notes
     """
     if not notes:
-        return "You don't have any notes.\n\nUse `add-note` to create one."
+        return "You don't have any notes.\n\nUse `add-note` to create one.\n\n"
     
     return "\n".join([str(note) for note in notes.data.values()])
 
@@ -102,7 +105,13 @@ def delete_note(args, notes):
         raise DeleteNoteError()
     
     key = args[0]
-    notes.delete_note(key)
+    
+    try:
+        key_int = int(key)
+    except:
+        raise InvalidNoteIdError()
+    
+    notes.delete_note(key_int)
     
     return "Note deleted."
 
@@ -120,3 +129,36 @@ def search_text(args, notes: Notes):
         return "\n----------------------------\n".join([str(note) for note in found_notes])
     else:
         return f"No notes found by the following text `{search_query}`."
+    
+
+@input_error
+def add_tag(args: CommandArguments, notes: Notes) -> str:
+    """Add tag to note
+
+    Args:
+        args (CommandArguments): User parameters. Expected note id and tag
+        notes (Notes): Notes
+
+    Raises:
+        ChangeNoteError: if user doesn't provide necessary arguments
+
+    Returns:
+        str: message about successfully changed note
+    """
+    if args is None or len(args) < 2:
+        raise AddTagError()
+    
+    key, tag = args[:2]
+    
+    try:
+        key_int = int(key)
+    except:
+        raise InvalidNoteIdError()
+    
+    if not notes.is_note_exists(key_int):
+        raise NonExistingNote()
+    
+    notes.add_tag(key_int, tag)
+    
+    return f"Tag added to note #{key}."
+
