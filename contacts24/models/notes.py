@@ -1,15 +1,9 @@
-
-
-
 from collections import UserDict
 from contacts24.errors import NonExistingNote
 from contacts24.models.note import Note
-from contacts24.models.record import Field
-
 
 
 class Notes(UserDict):
-    
 
     """This class provides functionality for working with notes"""
     def add_note(self, title, text):
@@ -21,8 +15,6 @@ class Notes(UserDict):
             note_id = 1
     
         self.data[note_id] = Note(note_id, title, text)
-
-    
 
     def change_note(self, key, new_text):
         """Changes the text of an existing note by its key."""

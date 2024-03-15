@@ -1,4 +1,3 @@
-
 from contacts24.models.record import Field
 
 
@@ -36,6 +35,13 @@ class Note():
         """Add a tag to note."""
         self.tags.append(tag)
 
-    def search_by_tag(self, tag: str) -> bool:
+    def contains_tag(self, tag: str) -> bool:
         """Check if the note contains the specified tag."""
         return tag in self.tags
+    
+    def __str__(self):
+        return (f"Note:\n"
+                f"  Id: {self.id}\n"
+                f"  Title: {self.title}\n"
+                f"  Text: {self.text}\n"
+                f"  Tags: {', '.join(self.tags)}")
