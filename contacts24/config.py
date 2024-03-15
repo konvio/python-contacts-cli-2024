@@ -1,6 +1,10 @@
 DATE_FORMAT = "%d.%m.%Y"
+
+# Files
 ADDRESSBOOK_FILE = "addressbook.json"
 NOTES_FILE = "notes.json"
+
+# CLI styles
 PROMPT_STYLE = {
     # User input (default text).
     '': '#ffffff',

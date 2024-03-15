@@ -79,4 +79,4 @@ def search_text(args, notes: Notes):
     if found_notes:
         return "\n----------------------------\n".join([str(note) for note in found_notes])
     else:
-        return "No notes found."
+        return f"No notes found by the following text `{search_query}`."

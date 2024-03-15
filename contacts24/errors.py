@@ -15,10 +15,6 @@ class AddContactInputError(InputError):
         return "AddContactInputError: 'add-contact' command expects two arguments 'name' and 'phone'"
 
 
-class AddNoteInputError(InputError):
-    def __str__(self):
-        return "AddNoteInputError: 'add-note' command expects one argument 'text'"
-
 
 class AddBirthdayInputError(InputError):
     def __str__(self):
@@ -33,23 +29,9 @@ class ChangeEmailInputError(InputError):
     def __str__(self):
         return "ChangeEmailInputError: 'change-email' command expects two arguments 'name' and  'email'."
 
-class ChangeNoteError(InputError):
-    def __str__(self):
-        return "ChangeNoteError: 'change-note' command expects two arguments 'id' and 'new_text'"
-
 class FindContactsInputError(InputError):
     def __str__(self):
         return "FindContactsInputError: 'find-contacts' command expects one arguments 'name'."
-
-
-class FindNoteInputError(InputError):
-    def __str__(self):
-        return "FindNoteInputError: 'find-notes' command expects one arguments 'search_query'."
-
-
-class DeleteNoteError(InputError):
-    def __str__(self):
-        return "DeleteNoteError: 'delete-note' command expects one arguments 'id'."
 
 
 class DeleteContactError(InputError):
@@ -91,29 +73,33 @@ class NonExistingContact(InputError):
         return "NonExistingContact: Check contact name, no such contact in address book"
 
 
-class InAccurateBirthdaysCommand(InputError):
+class InaccurateBirthdaysCommand(InputError):
     def __str__(self):
-        return "InAccurateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
+        return "InaccurateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
 
 #endregion
 
 #region Notes errors
 
+class AddNoteInputError(InputError):
+    def __str__(self):
+        return "AddNoteInputError: 'add-note' command expects one argument 'text'"
+
+class ChangeNoteError(InputError):
+    def __str__(self):
+        return "ChangeNoteError: 'change-note' command expects two arguments 'id' and 'new_text'"
+
 class NonExistingNote(InputError):
     def __str__(self):
         return "NonExistingNote: This note does not exist or has been deleted"
 
-
-class EmptyNoteError(InputError)
+class FindNoteInputError(InputError):
     def __str__(self):
-        return "EmptyNoteError: No text for note was provided"
+        return "FindNoteInputError: 'find-notes' command expects one arguments 'search_query'."
 
-
-class NotEnoughArgumentsInputError(InputError):
+class DeleteNoteError(InputError):
     def __str__(self):
-        return "NotEnoughArgumentsInputError: add-note' command expects two arguments 'name' and 'phone'"
-
-
+        return "DeleteNoteError: 'delete-note' command expects one arguments 'id'."
 
 #endregion
 

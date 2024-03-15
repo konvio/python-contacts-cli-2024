@@ -16,7 +16,7 @@ from .errors import (
     GetBirthdayInputError,
     NonExistingContact,
     PhoneInputError,
-    InAccurateBirthdaysCommand,
+    InaccurateBirthdaysCommand,
     DeleteContactError,
     input_error,
 )
@@ -135,12 +135,12 @@ def get_upcoming_birthdays(args: CommandArguments, contacts: AddressBook) -> str
     try:
         n_days = int(args[0])
     except TypeError:
-        raise InAccurateBirthdaysCommand()
+        raise InaccurateBirthdaysCommand()
 
     if n_days >= 0:
         return get_birthdays_within_days(contacts, n_days)
     else:
-        raise InAccurateBirthdaysCommand()
+        raise InaccurateBirthdaysCommand()
 
 
 def get_all_contacts(args: CommandArguments, contacts: AddressBook) -> str:
