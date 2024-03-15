@@ -16,8 +16,7 @@ class AddressBook(UserDict):
         if name in self.data:
             del self.data[name]
             print(f"{name} record is deleted")
-        else:
-            print(f"No records found by the name {name}")
+
 
     def save_to_file(self, filepath: str = ADDRESSBOOK_FILE) -> None:
         from contacts24.db import save_address_book

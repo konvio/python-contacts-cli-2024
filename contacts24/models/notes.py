@@ -19,13 +19,12 @@ class Notes(UserDict):
     def add_note_byid(self, note: Note) -> None:
         """Adds a new note to the notebook by id"""
     
-        self.data[note.id] = note
+        self.data[note.id.value] = note
 
     def _get_new_note_index(self) -> int:
         """Get new index for new note"""
         
         max_index = max(self.data.keys()) if len(self.data) > 0 else 0
-        
         return max_index + 1
 
     def change_note(self, id: int, new_text: str) -> None:
@@ -34,7 +33,7 @@ class Notes(UserDict):
         if id not in self.data:
             raise NonExistingNote()
         
-        self.data[id].text = new_text
+        self.data[id] = Note(id, new_text)
 
     def get_notes(self) -> list[Note]:
         """Returns all notes from the notebook."""
@@ -55,7 +54,7 @@ class Notes(UserDict):
         found_notes = []
         
         for note_id, note_data in self.data.items():
-            if search_query in note_data.text:
+            if search_query in note_data.text.value:
                 found_notes.append(note_data)
         return found_notes 
         
