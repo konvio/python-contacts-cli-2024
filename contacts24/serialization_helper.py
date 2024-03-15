@@ -56,7 +56,7 @@ def note_serialization(note: Note) -> dict:
         dict: dictionary based on input record
     """
     return {
-        "id": note.name.value,
+        "id": note.id.value,
         "text": note.text.value,
     }
 
@@ -69,9 +69,7 @@ def note_deserialization(data: dict) -> Note:
     Returns:
         Note: instance of class Note
     """
-    note = Note()
-    
-    note.add_text(data["text"], data["id"])
+    note = Note(int(data["id"]), data["text"])
     
     return note
 
