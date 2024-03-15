@@ -7,6 +7,17 @@ from contacts24.models.address_book import AddressBook
 
 
 def get_birthdays_within_days(address_book: AddressBook, within_days: int) -> str:
+    """
+    Generates a greeting string for the people whose birthdays are within the given number of days.
+
+    Args:
+        address_book (AddressBook): The address book containing the contacts.
+        within_days (int): The number of upcoming days to check for birthdays.
+
+    Returns:
+        str: The greeting string containing birthday wishes for the people whose birthdays are coming up within the surveyed days.
+
+    """
     relative_date = _get_relative_date(within_days)
     birthday_map = _construct_birthday_map(address_book, relative_date, within_days)
 

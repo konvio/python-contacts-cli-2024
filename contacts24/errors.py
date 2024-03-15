@@ -54,6 +54,7 @@ class InaccuratePhoneFormat(InputError):
     def __str__(self):
         return "InaccuratePhoneFormat: Phone number must contain exactly 10 digits."
 
+
 class InaccurateEmailFormat(InputError):
     def __str__(self):
         return "InaccurateEmailFormat: The email address provided does not adhere to the standard email format."
@@ -67,6 +68,11 @@ class NonExistingContact(InputError):
 class NonExistingNote(InputError):
     def __str__(self):
         return "NonExistingNote: This note does not exist or has been deleted"
+
+
+class InnacutateBirthdaysCommand(InputError):
+    def __str__(self):
+        return "InnacutateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
 
 def input_error(func):
     def inner(*args, **kwargs):
