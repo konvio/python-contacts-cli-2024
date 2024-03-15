@@ -7,8 +7,9 @@ from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.styles import Style
 from .cli_commands import Command, get_help
+from .os_resources import get_file_path
 
-from .config import PROMPT_MESSAGE, PROMPT_STYLE
+from .config import PROMPT_MESSAGE, PROMPT_STYLE, ADDRESSBOOK_FILE
 from .contacts import (
     add_birthday,
     add_contact,
@@ -27,7 +28,7 @@ from .contacts import (
 init(autoreset=True)
 
 
-contacts = load_contacts_book()
+contacts = load_contacts_book(get_file_path(ADDRESSBOOK_FILE))
 
 commands = {
     "hello": Command("hello", lambda x: "How can I help you?", is_hidden = True),
@@ -60,7 +61,7 @@ def start():
 
             if command == "exit":
                 print(Fore.LIGHTGREEN_EX + "Good bye!")
-                contacts.save_to_file()
+                contacts.save_to_file(get_file_path(ADDRESSBOOK_FILE))
                 break
 
             if command in commands:
