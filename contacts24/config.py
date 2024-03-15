@@ -8,5 +8,5 @@ PROMPT_STYLE = {
     'input_request': '#32c986',
 }
 PROMPT_MESSAGE = [
-    ('class:input_request', 'Enter a command:'),
+    ('class:input_request', 'Enter a command: '),
 ]
