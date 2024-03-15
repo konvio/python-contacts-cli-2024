@@ -47,6 +47,11 @@ class FindNoteInputError(InputError):
         return "FindNoteInputError: 'find-notes' command expects one arguments 'search_query'."
 
 
+class DeleteNoteError(InputError):
+    def __str__(self):
+        return "DeleteNoteError: 'delete-note' command expects one arguments 'id'."
+
+
 
 class AddAddressInputError(InputError):
     def __str__(self):

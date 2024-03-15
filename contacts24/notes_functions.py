@@ -2,7 +2,8 @@ from contacts24.errors import (
     input_error,
     AddNoteInputError,
     ChangeNoteError,
-    FindNoteInputError
+    FindNoteInputError,
+    DeleteNoteError
 )
 from contacts24.models.notes import Notes
 
@@ -43,12 +44,13 @@ def change_note(args, notes: Notes):
     return "Note changed."
 
 
-
 @input_error
 def delete_note(args, notes):
     """Deletes a note from the notebook."""
+    if args is None or len(args) < 1:
+        raise DeleteNoteError()
     
-    key, = args
+    key = args[0]
     notes.delete_note(int(key))
     
     return "Note deleted."
@@ -58,7 +60,7 @@ def delete_note(args, notes):
 def search_text(args, notes: Notes):
     """Searches for notes by a text query."""
     if args is None or len(args) < 1:
-        raise AddNoteInputError()
+        raise FindNoteInputError()
     
     search_query = " ".join(args)
     found_notes = notes.search_text(search_query)

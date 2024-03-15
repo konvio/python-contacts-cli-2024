@@ -28,7 +28,8 @@ from .notes_functions import (
     show_all_notes,
     add_note,
     change_note,
-    search_text
+    search_text,
+    delete_note
 )
 from contacts24.models.notes import Notes
 
@@ -64,6 +65,7 @@ commands = {
     "change-note": Command("change-note", partial(change_note, notes=notes), "Changes a note's text", "change_note <id> <new_text>"), 
     "find-note": Command("find-note", partial(search_text, notes=notes), "Prints notes by search query", "find-note <search_query>"), 
     "show-all-notes": Command("show-all-notes", partial(show_all_notes, notes=notes), "Prints all notes", "show-all-notes"), 
+    "delete-note": Command("delete-notes", partial(delete_note, notes=notes), "Prints all notes", "delete-note <id>"), 
 }
 
 
