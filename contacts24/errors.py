@@ -8,6 +8,8 @@ class InputError(Exception):
     pass
 
 
+#region Contacts Errors
+
 class AddContactInputError(InputError):
     def __str__(self):
         return "AddContactInputError: 'add-contact' command expects two arguments 'name' and 'phone'"
@@ -65,14 +67,16 @@ class NonExistingContact(InputError):
         return "NonExistingContact: Check contact name, no such contact in address book"
 
 
+class InAccurateBirthdaysCommand(InputError):
+    def __str__(self):
+        return "InAccurateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
+
+#endregion
+
 class NonExistingNote(InputError):
     def __str__(self):
         return "NonExistingNote: This note does not exist or has been deleted"
 
-
-class InnacutateBirthdaysCommand(InputError):
-    def __str__(self):
-        return "InnacutateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
 
 def input_error(func):
     def inner(*args, **kwargs):
