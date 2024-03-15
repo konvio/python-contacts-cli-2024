@@ -27,7 +27,8 @@ from .contacts import (
 from .notes_functions import (
     show_all_notes,
     add_note,
-    change_note
+    change_note,
+    search_text
 )
 from contacts24.models.notes import Notes
 
@@ -40,6 +41,7 @@ def mock_notes():
     mock_notes = Notes()
     mock_notes.add_note("Some text")
     mock_notes.add_note("Second text about second text not to forget second text")
+    mock_notes.add_note("Third note")
     return mock_notes
 
 
@@ -60,7 +62,7 @@ commands = {
     "find-contacts": Command("find-contact", partial(find_contacts, contacts=contacts), "Prints contacts by name", "find-contacts"),
     "add-note": Command("add-note", partial(add_note, notes=notes), "Adds a new note", "add-note <text>"), 
     "change-note": Command("change-note", partial(change_note, notes=notes), "Changes a note's text", "change_note <id> <new_text>"), 
-    "find-note": Command("find-note", lambda x: "In development"), 
+    "find-note": Command("find-note", partial(search_text, notes=notes), "Prints notes by search query", "find-note <search_query>"), 
     "show-all-notes": Command("show-all-notes", partial(show_all_notes, notes=notes), "Prints all notes", "show-all-notes"), 
 }
 

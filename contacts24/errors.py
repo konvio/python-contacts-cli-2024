@@ -42,6 +42,12 @@ class FindContactsInputError(InputError):
         return "FindContactsInputError: 'find-contacts' command expects one arguments 'name'."
 
 
+class FindNoteInputError(InputError):
+    def __str__(self):
+        return "FindNoteInputError: 'find-notes' command expects one arguments 'search_query'."
+
+
+
 class AddAddressInputError(InputError):
     def __str__(self):
         return "AddBirthdatInputError: 'add-address' command expects two arguments 'name' and 'address'."
