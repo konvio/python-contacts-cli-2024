@@ -23,7 +23,7 @@ class Notes(UserDict):
         if id not in self.data:
             raise NonExistingNote()
         
-        self.data[id].text = new_text
+        self.data[id] = Note(id, new_text)
 
     def get_notes(self):
         """Returns all notes from the notebook."""
