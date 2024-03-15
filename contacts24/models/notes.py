@@ -17,7 +17,7 @@ class Notes(UserDict):
     
         self.data[note_id] = Note(note_id, text)
 
-    def change_note(self, id: in, new_text: str):
+    def change_note(self, id: int, new_text: str):
         """Changes the text of an existing note by its id."""
         
         if not id in self.data:
