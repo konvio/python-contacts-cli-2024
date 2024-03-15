@@ -9,7 +9,7 @@ from prompt_toolkit.styles import Style
 from .cli_commands import Command, get_help
 from .os_resources import get_file_path
 
-from .config import PROMPT_MESSAGE, PROMPT_STYLE, ADDRESSBOOK_FILE
+from .config import PROMPT_MESSAGE, PROMPT_STYLE, ADDRESSBOOK_FILE, NOTES_FILE
 from .contacts import (
     add_birthday,
     add_contact,
@@ -30,24 +30,16 @@ from .notes_functions import (
     add_note,
     change_note,
     search_text,
-    delete_note
+    delete_note,
+    
+    load_notes
 )
-from contacts24.models.notes import Notes
 
 init(autoreset=True)
 
 
 contacts = load_contacts_book(get_file_path(ADDRESSBOOK_FILE))
-
-def mock_notes():
-    mock_notes = Notes()
-    mock_notes.add_note("Some text")
-    mock_notes.add_note("Second text about second text not to forget second text")
-    mock_notes.add_note("Third note")
-    return mock_notes
-
-
-notes = mock_notes()
+notes = load_notes(get_file_path(NOTES_FILE))
 
 commands = {
     "hello": Command("hello", lambda x: "How can I help you?\n", is_hidden = True),
@@ -83,6 +75,7 @@ def start():
             if command == "exit":
                 print(Fore.LIGHTGREEN_EX + "Good bye!")
                 contacts.save_to_file(get_file_path(ADDRESSBOOK_FILE))
+                notes.save_to_file(get_file_path(NOTES_FILE))
                 break
 
             if command in commands:

@@ -1,15 +1,26 @@
+
 from contacts24.errors import (
     input_error,
     AddNoteInputError,
     ChangeNoteError,
     FindNoteInputError,
-    DeleteNoteError
+    DeleteNoteError,
+    AppError
 )
 from contacts24.models.notes import Notes
 
 
+def load_notes(filepath: str) -> Notes:
+    try:
+        notes = Notes.load_from_file(filepath)
+    except FileNotFoundError:
+        print(f"File {filepath} not found. Initializing an empty Notes.")
+        notes = Notes()
+    except AppError:
+        print(f"File {filepath} cannot be loaded. Initializing an empty Notes.")
+        notes = Notes()
+    return notes
 
-@input_error
 def show_all_notes(args, notes: Notes) -> str:
     """Shows all notes from the notebook."""
     if not notes:
@@ -25,9 +36,9 @@ def add_note(args, notes):
         raise AddNoteInputError()
 
     text = " ".join(args)
-    notes.add_note(text)
+    index = notes.add_note(text)
     
-    return "Note added."
+    return f"Note added (by #{index})."
 
 
 @input_error
@@ -41,7 +52,7 @@ def change_note(args, notes: Notes):
     
     notes.change_note(int(key), new_text)
     
-    return "Note changed."
+    return f"Note changed (by #{key})."
 
 
 @input_error
@@ -51,7 +62,7 @@ def delete_note(args, notes):
         raise DeleteNoteError()
     
     key = args[0]
-    notes.delete_note(int(key))
+    notes.delete_note(key)
     
     return "Note deleted."
 
@@ -68,4 +79,4 @@ def search_text(args, notes: Notes):
     if found_notes:
         return "\n----------------------------\n".join([str(note) for note in found_notes])
     else:
-        return "No notes found."
+        return f"No notes found by the following text `{search_query}`."

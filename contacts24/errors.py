@@ -8,19 +8,17 @@ class InputError(Exception):
     pass
 
 
+#region Contacts Errors
+
 class AddContactInputError(InputError):
     def __str__(self):
         return "AddContactInputError: 'add-contact' command expects two arguments 'name' and 'phone'"
 
 
-class AddNoteInputError(InputError):
-    def __str__(self):
-        return "AddNoteInputError: 'add-note' command expects one argument 'text'"
 
-
-class AddBirthdatInputError(InputError):
+class AddBirthdayInputError(InputError):
     def __str__(self):
-        return "AddBirthdatInputError: 'add-birthday' command expects two arguments 'name' and 'birthday'."
+        return "AddBirthdayInputError: 'add-birthday' command expects two arguments 'name' and 'birthday'."
 
 
 class ChangeInputError(InputError):
@@ -31,25 +29,9 @@ class ChangeEmailInputError(InputError):
     def __str__(self):
         return "ChangeEmailInputError: 'change-email' command expects two arguments 'name' and  'email'."
 
-
-class ChangeNoteError(InputError):
-    def __str__(self):
-        return "ChangeNoteError: 'change-note' command expects two arguments 'id' and 'new_text'"
-
-
 class FindContactsInputError(InputError):
     def __str__(self):
         return "FindContactsInputError: 'find-contacts' command expects one arguments 'name'."
-
-
-class FindNoteInputError(InputError):
-    def __str__(self):
-        return "FindNoteInputError: 'find-notes' command expects one arguments 'search_query'."
-
-
-class DeleteNoteError(InputError):
-    def __str__(self):
-        return "DeleteNoteError: 'delete-note' command expects one arguments 'id'."
 
 
 class DeleteContactError(InputError):
@@ -59,7 +41,7 @@ class DeleteContactError(InputError):
 
 class AddAddressInputError(InputError):
     def __str__(self):
-        return "AddBirthdatInputError: 'add-address' command expects two arguments 'name' and 'address'."
+        return "AddAddressInputError: 'add-address' command expects two arguments 'name' and 'address'."
 
 class PhoneInputError(InputError):
     def __str__(self):
@@ -91,14 +73,35 @@ class NonExistingContact(InputError):
         return "NonExistingContact: Check contact name, no such contact in address book"
 
 
+class InaccurateBirthdaysCommand(InputError):
+    def __str__(self):
+        return "InaccurateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
+
+#endregion
+
+#region Notes errors
+
+class AddNoteInputError(InputError):
+    def __str__(self):
+        return "AddNoteInputError: 'add-note' command expects one argument 'text'"
+
+class ChangeNoteError(InputError):
+    def __str__(self):
+        return "ChangeNoteError: 'change-note' command expects two arguments 'id' and 'new_text'"
+
 class NonExistingNote(InputError):
     def __str__(self):
         return "NonExistingNote: This note does not exist or has been deleted"
 
-
-class InnacutateBirthdaysCommand(InputError):
+class FindNoteInputError(InputError):
     def __str__(self):
-        return "InnacutateBirthdaysCommand: birthdays command expects one numeric argument 'n_days' >= 0"
+        return "FindNoteInputError: 'find-notes' command expects one arguments 'search_query'."
+
+class DeleteNoteError(InputError):
+    def __str__(self):
+        return "DeleteNoteError: 'delete-note' command expects one arguments 'id'."
+
+#endregion
 
 def input_error(func):
     def inner(*args, **kwargs):

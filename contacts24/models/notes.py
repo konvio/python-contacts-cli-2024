@@ -1,17 +1,20 @@
 from collections import UserDict
 from contacts24.errors import NonExistingNote
+from contacts24.config import NOTES_FILE
 from contacts24.models.note import Note
 
 
 class Notes(UserDict):
     """This class provides functionality for working with notes"""
     
-    def add_note(self, text: str) -> None:
+    def add_note(self, text: str) -> int:
         """Adds a new note to the notebook."""
         
         index = self._get_new_note_index()
         
         self.add_note_byid(Note(index, text))
+        
+        return index
         
     def add_note_byid(self, note: Note) -> None:
         """Adds a new note to the notebook by id"""
@@ -51,7 +54,22 @@ class Notes(UserDict):
         found_notes = []
         
         for note_id, note_data in self.data.items():
-            if search_query in note_data.text.value:
+            if search_query.lower() in note_data.text.value.lower():
                 found_notes.append(note_data)
         return found_notes 
         
+
+    def save_to_file(self, filepath: str = NOTES_FILE) -> None:
+        from contacts24.db import save_notes
+        if filepath:
+            save_notes(self, filepath)
+        else:
+            save_notes(self)
+            
+    @staticmethod
+    def load_from_file(filepath: str = NOTES_FILE) -> "Notes":
+        from contacts24.db import get_notes
+        if filepath:
+            return get_notes(filepath)
+        else:
+            return get_notes()

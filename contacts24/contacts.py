@@ -7,7 +7,7 @@ from .models.record import Record
 from .birthdays import get_birthdays_within_days
 from .errors import (
     AppError,
-    AddBirthdatInputError,
+    AddBirthdayInputError,
     AddContactInputError,
     ChangeInputError,
     ChangeEmailInputError,
@@ -16,12 +16,11 @@ from .errors import (
     GetBirthdayInputError,
     NonExistingContact,
     PhoneInputError,
-    InnacutateBirthdaysCommand,
+    InaccurateBirthdaysCommand,
     DeleteContactError,
     input_error,
 )
 
-Contacts = dict[str, str]
 CommandArguments = list[str]
 
 
@@ -64,7 +63,7 @@ def add_contact(args: CommandArguments, contacts: AddressBook) -> str:
 @input_error
 def add_birthday(args: CommandArguments, contacts: AddressBook) -> str:
     if args is None or len(args) < 2:
-        raise AddBirthdatInputError()
+        raise AddBirthdayInputError()
 
     name, date = args[:2]
     contact = contacts.find(name)
@@ -135,12 +134,12 @@ def get_upcoming_birthdays(args: CommandArguments, contacts: AddressBook) -> str
     try:
         n_days = int(args[0])
     except TypeError:
-        raise InnacutateBirthdaysCommand()
+        raise InaccurateBirthdaysCommand()
 
     if n_days >= 0:
         return get_birthdays_within_days(contacts, n_days)
     else:
-        raise InnacutateBirthdaysCommand()
+        raise InaccurateBirthdaysCommand()
 
 
 def get_all_contacts(args: CommandArguments, contacts: AddressBook) -> str:
@@ -158,7 +157,7 @@ def find_contacts(args: CommandArguments, contacts: AddressBook) -> str:
     result_book = AddressBook()
 
     for contact in contacts.data.values():
-        if name in str(contact.name):
+        if name.lower() in str(contact.name).lower():
             result_book.add_record(contact)
 
     if len(result_book) == 0:
