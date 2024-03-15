@@ -2,7 +2,6 @@
 
 from typing import Optional
 
-from contacts24.config import ADDRESSBOOK_FILE
 from .models.address_book import AddressBook
 from .models.record import Record
 from .birthdays import get_birthdays_within_days
@@ -37,14 +36,14 @@ def parse_input(user_input: str) -> tuple[str, Optional[CommandArguments]]:
 
     return cmd, args
 
-def load_contacts_book() -> AddressBook:
+def load_contacts_book(filepath: str) -> AddressBook:
     try:
-        contacts = AddressBook.load_from_file(ADDRESSBOOK_FILE)
+        contacts = AddressBook.load_from_file(filepath)
     except FileNotFoundError:
-        print(f"File {ADDRESSBOOK_FILE} not found. Initializing an empty AddressBook.")
+        print(f"File {filepath} not found. Initializing an empty AddressBook.")
         contacts = AddressBook()
     except AppError:
-        print(f"File {ADDRESSBOOK_FILE} cannot be loaded. Initializing an empty AddressBook.")
+        print(f"File {filepath} cannot be loaded. Initializing an empty AddressBook.")
         contacts = AddressBook()
     return contacts
 
