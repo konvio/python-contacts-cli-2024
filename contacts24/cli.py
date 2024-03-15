@@ -34,23 +34,12 @@ from .notes_functions import (
     
     load_notes
 )
-from contacts24.models.notes import Notes
 
 init(autoreset=True)
 
 
 contacts = load_contacts_book(get_file_path(ADDRESSBOOK_FILE))
 notes = load_notes(get_file_path(NOTES_FILE))
-
-# def mock_notes():
-#     mock_notes = Notes()
-#     mock_notes.add_note("Some text")
-#     mock_notes.add_note("Second text about second text not to forget second text")
-#     mock_notes.add_note("Third note")
-#     return mock_notes
-
-
-# notes = mock_notes()
 
 commands = {
     "hello": Command("hello", lambda x: "How can I help you?\n", is_hidden = True),
