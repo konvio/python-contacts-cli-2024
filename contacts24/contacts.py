@@ -158,7 +158,7 @@ def find_contacts(args: CommandArguments, contacts: AddressBook) -> str:
     result_book = AddressBook()
 
     for contact in contacts.data.values():
-        if name in str(contact.name):
+        if name.lower() in str(contact.name).lower():
             result_book.add_record(contact)
 
     if len(result_book) == 0:
