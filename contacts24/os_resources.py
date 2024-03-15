@@ -11,7 +11,7 @@ def get_file_path(filename = "") -> str:
     """
     try:
         folder = os.path.expanduser('~')
-    except Exception as e:
+    except:
         folder = os.getcwd()
     
     if filename and filename != '':
