@@ -20,7 +20,7 @@ class Notes(UserDict):
     def change_note(self, id: int, new_text: str):
         """Changes the text of an existing note by its id."""
         
-        if not id in self.data:
+        if id not in self.data:
             raise NonExistingNote()
         
         self.data[id].text = new_text
@@ -33,7 +33,7 @@ class Notes(UserDict):
     def delete_note(self, id: int):
         """Deletes a note by its id."""
         
-        if not id in self.data:
+        if id not in self.data:
             raise NonExistingNote()
         
         del self.data[id]
