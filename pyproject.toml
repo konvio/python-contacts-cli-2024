@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "contacts24"
-version = "24.03.15"
+version = "24.03.17"
 description = ""
 authors = ["Vitaliy Kononenko <konvio@users.noreply.github.com>"]
 readme = "README.md"
