@@ -7,12 +7,17 @@ Contacts24 is a command-line interface for managing your contacts.
 - Python 3.11
 - Poetry
 
-## Installation
+## Quickstart
 
-You can install Contacts24 directly from PyPI:
+1. Install Contacts24 directly from PyPI:
 
 ```bash
 pip install contacts24 --upgrade
+```
+
+2. Run Contacts24
+
+```bash
 python -m contacts24
 ```
 
