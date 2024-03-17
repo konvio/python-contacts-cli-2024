@@ -35,6 +35,7 @@ from .notes_functions import (
     
     add_tag,
     delete_tag,
+    show_all_notes_by_tags,
     
     load_notes
 )
@@ -66,6 +67,7 @@ commands = {
     "change-note": Command("change-note", partial(change_note, notes=notes), "Changes a note's text", "change_note <id> <new_text>"), 
     "find-note": Command("find-note", partial(search_text, notes=notes), "Prints notes by search query", "find-note <search_query>"), 
     "show-all-notes": Command("show-all-notes", partial(show_all_notes, notes=notes), "Prints all notes", "show-all-notes"), 
+    "show-all-notes-by-tags": Command("show-all-notes-by-tags", partial(show_all_notes_by_tags, notes=notes), "Prints all notes grouped by tags", "show-all-notes-by-tags"), 
     "delete-note": Command("delete-notes", partial(delete_note, notes=notes), "Deletes notes by id", "delete-note <id>"), 
 }
 

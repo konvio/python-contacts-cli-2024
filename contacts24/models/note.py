@@ -43,6 +43,14 @@ class Note():
 
         return any(tag.value == search_tag for tag in self.tags)
     
+    def get_tags(self) -> [str]:
+        """Get separate tags for notes
+
+        Returns:
+            list[str]: list tags
+        """
+        return [tag.value for tag in self.tags]
+    
     def __str__(self):
         return f"""Note:
 Id: {self.id}

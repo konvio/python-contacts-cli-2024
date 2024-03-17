@@ -47,7 +47,39 @@ def show_all_notes(args: CommandArguments, notes: Notes) -> str:
     if not notes:
         return "You don't have any notes.\n\nUse `add-note` to create one.\n\n"
     
-    return "\n".join([str(note) for note in notes.data.values()])
+    return "\n______________________________________\n".join([str(note) for note in notes.data.values()])
+
+def show_all_notes_by_tags(args: CommandArguments, notes: Notes) -> str:
+    """Shows all notes grouped by tags from the notebook.
+
+    Args:
+        args (CommandArguments): list of arguments from user
+        notes (Notes): notes
+
+    Returns:
+        str: list of all notes or message for no notes
+    """
+    if not notes:
+        return "You don't have any notes.\n\nUse `add-note` to create one.\n\n"
+    
+    notes_by_tags = notes.get_notes_by_tags()
+    
+    message = ""
+    
+    nl = "\n"
+    
+    for tag, groupped_notes in notes_by_tags.items():
+        message += f"""
+______________________________________
+Tag: {tag}
+______________________________________
+        
+{(f'{nl}{nl}'.join([str(note) for note in groupped_notes]))}
+--------------------------------------
+"""
+    
+    return message
+
 
 
 @input_error

@@ -1,4 +1,4 @@
-from collections import UserDict
+from collections import UserDict, defaultdict
 from contacts24.errors import NonExistingNote
 from contacts24.config import NOTES_FILE
 from contacts24.models.note import Note
@@ -39,6 +39,18 @@ class Notes(UserDict):
         """Returns all notes from the notebook."""
         
         return list(self.data.values())
+
+    def get_notes_by_tags(self) -> defaultdict[list]:
+        """Returns all notes from the notebook grouped by tags"""
+        
+        result = defaultdict(list)
+        
+        for note in self.data.values():
+            
+            for tag in note.get_tags():
+                result[tag].append(note)
+        
+        return result
 
     def is_note_exists(self, id: int) -> bool:
         """Is note exists by id"""
